@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { objectIdSchema } from '../utils/object.utils'
-import { dateStringToDate } from '../utils/dateToStringToDate.utils'
+import { dateStringToDate } from '../../utils/dateToStringToDate.utils'
+import { objectIdSchema } from '../../utils/object.utils'
 
 export const serviceSchema = z.object({
   description: z.string().min(1, 'Descrição é obrigatória'),

@@ -1,6 +1,6 @@
 import { Model, Types } from 'mongoose'
 import { IServiceRepository } from '../interface/service.repository'
-import Service, { IService } from '../models/Service'
+import Service, { IService } from '../models/service.model'
 
 export class ServiceRepository implements IServiceRepository {
   private model: Model<IService>

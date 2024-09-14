@@ -1,4 +1,4 @@
-import { IService } from '../models/Service'
+import { IService } from '../models/service.model'
 
 export interface IServiceRepository {
   findAll(): Promise<IService[]>

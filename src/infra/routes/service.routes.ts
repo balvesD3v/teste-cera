@@ -4,7 +4,7 @@ import { GetAllServiceController } from '../controllers/get-all-services.control
 import { GetByIdServiceController } from '../controllers/get-by-id-services.controller'
 import { DeleteServiceController } from '../controllers/delete-service.controller'
 import { UpdateServiceController } from '../controllers/update-service.controller'
-import { ServiceRepository } from '../repositories/service.repository'
+import { ServiceRepository } from '../infra/repositories/service.repository'
 
 const router = Router()
 const serviceRepository = new ServiceRepository()
