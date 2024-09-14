@@ -1,35 +1,35 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema } from 'mongoose'
 
 export interface IService extends Document {
-    description: string
-    serviceDate: Date
-    vehicleId: mongoose.Types.ObjectId
-    clientId: mongoose.Types.ObjectId
-    status: "pending" | "completed" | "cancelled"
-    price: number
+  description: string
+  serviceDate: Date
+  vehicleId: mongoose.Types.ObjectId
+  clientId: mongoose.Types.ObjectId
+  status: 'pending' | 'completed' | 'cancelled'
+  price: number
 }
 
 const ServiceSchema: Schema = new Schema({
-   description: {
+  description: {
     type: String,
-    required: true
-   },
-   serviceDate: {
+    required: true,
+  },
+  serviceDate: {
     type: Date,
-    required: true
-   },
-   vehicleId: {
+    required: true,
+  },
+  vehicleId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-   },
-   status: {
+  },
+  status: {
     type: String,
-    required: true
-   },
-   price: {
+    required: true,
+  },
+  price: {
     type: Number,
-    required: true
-   }
+    required: true,
+  },
 })
 
-export default mongoose.model<IService>("Service", ServiceSchema)
+export default mongoose.model<IService>('Service', ServiceSchema)
