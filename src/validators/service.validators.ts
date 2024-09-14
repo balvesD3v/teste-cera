@@ -1,18 +1,6 @@
 import { z } from 'zod'
-import { Types } from 'mongoose'
-
-const dateStringToDate = (dateString: string | undefined): Date | undefined => {
-  if (dateString === undefined) return undefined
-  const date = new Date(dateString)
-  return isNaN(date.getTime()) ? undefined : date
-}
-
-const objectIdSchema = z
-  .string()
-  .refine((value) => Types.ObjectId.isValid(value), {
-    message: 'Invalid ObjectId',
-  })
-  .transform((value) => new Types.ObjectId(value))
+import { objectIdSchema } from '../utils/object.utils'
+import { dateStringToDate } from '../utils/dateToStringToDate.utils'
 
 export const serviceSchema = z.object({
   description: z.string().min(1, 'Descrição é obrigatória'),
