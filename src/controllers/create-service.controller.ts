@@ -1,23 +1,16 @@
 import { Request, Response } from 'express'
-import Service from '../models/Service'
 import { serviceSchema } from '../validators/service.validators'
 import { ZodError } from 'zod'
 import { ServiceRepository } from '../repositories/service.repository'
 
 export class CreateServiceController {
-  private serviceRepository: ServiceRepository
-
-  constructor() {
-    this.serviceRepository = new ServiceRepository()
-  }
+  constructor(private readonly serviceRepository: ServiceRepository) {}
 
   public async createService(req: Request, res: Response): Promise<Response> {
     try {
       const validateDate = serviceSchema.parse(req.body)
 
-      const newService = new Service(validateDate)
-
-      await newService.save()
+      const newService = await this.serviceRepository.create(validateDate)
 
       return res.status(201).json(newService)
     } catch (error) {

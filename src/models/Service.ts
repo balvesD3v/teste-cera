@@ -1,15 +1,15 @@
-import mongoose, { Document, Schema } from 'mongoose'
+import mongoose, { Document, Schema, Types } from 'mongoose'
 
 export interface IService extends Document {
   description: string
   serviceDate: Date
-  vehicleId: mongoose.Types.ObjectId
-  clientId: mongoose.Types.ObjectId
-  status: 'pending' | 'completed' | 'cancelled'
+  vehicleId: Types.ObjectId
+  clientId: Types.ObjectId
+  status: 'pending' | 'completed' | 'canceled'
   price: number
 }
 
-const ServiceSchema: Schema = new Schema({
+const Service: Schema = new Schema({
   description: {
     type: String,
     required: true,
@@ -22,9 +22,13 @@ const ServiceSchema: Schema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
+  clientId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
   status: {
     type: String,
-    required: true,
+    enum: ['pending', 'completed', 'canceled'],
   },
   price: {
     type: Number,
@@ -32,4 +36,4 @@ const ServiceSchema: Schema = new Schema({
   },
 })
 
-export default mongoose.model<IService>('Service', ServiceSchema)
+export default mongoose.model<IService>('Service', Service)

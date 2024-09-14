@@ -1,18 +1,22 @@
 import { Request, Response } from 'express'
-import Service from '../models/Service'
+import { ServiceRepository } from '../repositories/service.repository'
 
-export const getByIdService = async (req: Request, res: Response) => {
-  const { id } = req.params
+export class GetByIdServiceController {
+  constructor(private readonly serviceRepository: ServiceRepository) {}
 
-  try {
-    const service = await Service.findById(id)
+  getByIdService = async (req: Request, res: Response) => {
+    const { id } = req.params
 
-    if (!service) {
-      return res.status(404).json({ error: 'Serviço não encontrado' })
+    try {
+      const service = await this.serviceRepository.findById(id)
+
+      if (!service) {
+        return res.status(404).json({ error: 'Serviço não encontrado' })
+      }
+
+      return res.status(200).json(service)
+    } catch (error) {
+      return res.status(500).json({ error: 'Erro interno do servidor' })
     }
-
-    return res.status(200).json(service)
-  } catch (error) {
-    return res.status(500).json({ error: 'Erro interno do servidor' })
   }
 }

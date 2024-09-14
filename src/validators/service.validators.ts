@@ -1,18 +1,26 @@
 import { z } from 'zod'
+import { Types } from 'mongoose'
+
+const dateStringToDate = (dateString: string | undefined): Date | undefined => {
+  if (dateString === undefined) return undefined
+  const date = new Date(dateString)
+  return isNaN(date.getTime()) ? undefined : date
+}
+
+const objectIdSchema = z
+  .string()
+  .refine((value) => Types.ObjectId.isValid(value), {
+    message: 'Invalid ObjectId',
+  })
+  .transform((value) => new Types.ObjectId(value))
 
 export const serviceSchema = z.object({
-  description: z
-    .string()
-    .min(5, 'A descrição deve ter no mínimo 5 caracteres.'),
-  serviceDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
-    message: 'A data do serviço deve ser uma data válida.',
-  }),
-  vehicleId: z
-    .string()
-    .length(24, 'O ID do veículo deve ser um ObjectId válido.'),
-  clientId: z
-    .string()
-    .length(24, 'O ID do cliente deve ser um ObjectId válido.'),
-  status: z.enum(['pending', 'completed', 'canceled']),
-  price: z.number().positive('O preço deve ser um número positivo.'),
+  description: z.string().optional(),
+  serviceDate: z.string().optional().transform(dateStringToDate),
+  vehicleId: objectIdSchema,
+  clientId: objectIdSchema,
+  status: z.enum(['pending', 'completed', 'canceled']).optional(),
+  price: z.number().positive('Preço deve ser um valor positivo'),
 })
+
+export const updateServiceSchema = serviceSchema.partial()

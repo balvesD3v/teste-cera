@@ -1,18 +1,49 @@
 import { Request, Response } from 'express'
-import Service from '../models/Service'
+import { ServiceRepository } from '../repositories/service.repository'
+import { ZodError } from 'zod'
+import { Types } from 'mongoose'
+import { serviceSchema } from '../validators/service.validators'
 
-export const updateService = async (req: Request, res: Response) => {
-  const { id } = req.params
+export class UpdateServiceController {
+  constructor(private readonly serviceRepository: ServiceRepository) {}
 
-  try {
-    const service = await Service.findByIdAndUpdate(id)
-
-    if (!service) {
-      return res.status(404).json({ error: 'Serviço não encontrado' })
+  private convertToObjectId(id: string | Types.ObjectId): Types.ObjectId {
+    if (typeof id === 'string') {
+      return new Types.ObjectId(id)
     }
+    return id
+  }
 
-    return res.status(200).json(service)
-  } catch (error) {
-    return res.status(500).json({ error: 'Erro interno do servidor' })
+  public async updateService(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params
+
+    try {
+      const validatedData = serviceSchema.partial().parse(req.body)
+
+      if (validatedData.vehicleId) {
+        validatedData.vehicleId = this.convertToObjectId(
+          validatedData.vehicleId,
+        )
+      }
+      if (validatedData.clientId) {
+        validatedData.clientId = this.convertToObjectId(validatedData.clientId)
+      }
+
+      const updatedService = await this.serviceRepository.update(
+        id,
+        validatedData,
+      )
+
+      if (!updatedService) {
+        return res.status(404).json({ error: 'Serviço não encontrado' })
+      }
+
+      return res.status(200).json(updatedService)
+    } catch (error) {
+      if (error instanceof ZodError) {
+        return res.status(400).json({ errors: error.errors })
+      }
+      return res.status(500).json({ error: 'Erro interno do servidor' })
+    }
   }
 }
