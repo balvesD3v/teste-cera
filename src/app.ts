@@ -1,5 +1,5 @@
 import express from 'express'
-import serviceRoutes from './routes/service.routes'
+import serviceRoutes from './infra/routes/service.routes'
 import mongoose from 'mongoose'
 
 const app = express()

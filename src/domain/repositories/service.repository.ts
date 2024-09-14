@@ -1,9 +1,9 @@
-import { IService } from '../models/service.model'
+import { Service } from '../entities/service.entity'
 
 export interface IServiceRepository {
-  findAll(): Promise<IService[]>
-  findById(id: string): Promise<IService | null>
-  create(data: Partial<IService>): Promise<IService>
-  update(id: string, data: Partial<IService>): Promise<IService | null>
-  delete(id: string): Promise<IService | null>
+  findAll(): Promise<Service[]>
+  findById(id: string): Promise<Service | null>
+  create(data: Partial<Service>): Promise<Service>
+  update(id: string, data: Partial<Service>): Promise<Service | null>
+  delete(id: string): Promise<Service | null>
 }
