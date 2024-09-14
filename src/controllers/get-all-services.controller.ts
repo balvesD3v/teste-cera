@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import Service from '../models/Service'
 import { ServiceRepository } from '../repositories/service.repository'
 
-export class ServiceGetAllController {
+export class GetAllServiceController {
   private serviceRepository: ServiceRepository
 
   constructor() {
