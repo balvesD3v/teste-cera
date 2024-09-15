@@ -1,5 +1,5 @@
-import { ServiceRepository } from '../../domain/repositories/service.repository'
-import { Service } from '../../domain/entities/service.entity'
+import { Service } from '../../domain/enterprise/entities/service.entity'
+import { ServiceRepository } from '../../domain/enterprise/repositories/service.repository'
 import { ServiceModel } from '../models/service.model'
 import { ServiceMapper } from './mappers/service.mapper'
 
@@ -24,13 +24,10 @@ export class MongoServiceRepository implements ServiceRepository {
     return mongooseDocs ? ServiceMapper.toDomain(mongooseDocs) : null
   }
 
-  async update(service: Service): Promise<Service | null> {
-    const persitenceData = ServiceMapper.toService(service)
-    const updateService = await ServiceModel.findByIdAndUpdate(
-      service.id,
-      persitenceData,
-      { new: true },
-    ).exec()
+  async update(id: string, updates: Partial<Service>): Promise<Service | null> {
+    const updateService = await ServiceModel.findByIdAndUpdate(id, updates, {
+      new: true,
+    }).exec()
     return updateService ? ServiceMapper.toDomain(updateService) : null
   }
 }

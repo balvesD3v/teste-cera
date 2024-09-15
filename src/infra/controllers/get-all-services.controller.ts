@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { ServiceRepository } from '../../domain/repositories/service.repository'
+import { ServiceRepository } from '../../domain/enterprise/repositories/service.repository'
 
 export class GetAllServiceController {
   constructor(private readonly serviceRepository: ServiceRepository) {}

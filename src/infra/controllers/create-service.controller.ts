@@ -1,11 +1,11 @@
 import { Request, Response } from 'express'
 import { ZodError } from 'zod'
-import { CreateServiceUseCase } from '../../application/use-cases/create-service.usecase'
+import { CreateServiceUseCase } from '../../domain/application/use-cases/create-service.usecase'
 
 export class CreateServiceController {
   constructor(private readonly createServiceUseCase: CreateServiceUseCase) {}
 
-  public async createService(req: Request, res: Response): Promise<Response> {
+  async createService(req: Request, res: Response): Promise<Response> {
     const { description, serviceDate, vehicleId, clientId, status, price } =
       req.body
 
@@ -24,8 +24,6 @@ export class CreateServiceController {
       if (error instanceof ZodError) {
         return res.status(400).json({ errors: error.errors })
       }
-
-      console.error('Erro interno:', error)
 
       return res
         .status(500)

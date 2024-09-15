@@ -1,29 +1,25 @@
-import mongoose from 'mongoose'
-import { Service } from '../../../domain/entities/service.entity'
 import { IServiceModel } from '../../models/service.model'
+import { Service } from '../../../domain/enterprise/entities/service.entity'
+import { UniqueEntityId } from '../../../core/entities/unique-entity-id'
 
 export class ServiceMapper {
   static toDomain(raw: IServiceModel): Service {
-    if (!(raw._id instanceof mongoose.Types.ObjectId)) {
-      throw new Error('ID do serviço não é do tipo ObjectId')
-    }
-    return new Service(
-      raw.description,
-      raw.serviceDate,
-      raw.vehicleId.toString(),
-      raw.clientId.toString(),
-      raw.status,
-      raw.price,
-      raw._id.toString(),
-    )
+    return Service.create({
+      description: raw.description,
+      clientId: new UniqueEntityId(raw.clientId),
+      vehicleId: new UniqueEntityId(raw.vehicleId),
+      price: raw.price,
+      serviceDate: raw.serviceDate,
+      status: raw.status,
+    })
   }
 
   static toService(service: Service): Partial<IServiceModel> {
     return {
       description: service.description,
       serviceDate: service.serviceDate,
-      vehicleId: new mongoose.Types.ObjectId(service.vehicleId),
-      clientId: new mongoose.Types.ObjectId(service.clientId),
+      vehicleId: service.vehicleId.toString(),
+      clientId: service.clientId.toString(),
       status: service.status,
       price: service.price,
     }

@@ -1,10 +1,11 @@
-import mongoose, { Document, Schema, Types } from 'mongoose'
+import mongoose, { Document, Schema } from 'mongoose'
+import { string } from 'zod'
 
 export interface IServiceModel extends Document {
   description: string
   serviceDate: Date
-  vehicleId: Types.ObjectId
-  clientId: Types.ObjectId
+  vehicleId: string
+  clientId: string
   status: 'pending' | 'completed' | 'canceled'
   price: number
 }
