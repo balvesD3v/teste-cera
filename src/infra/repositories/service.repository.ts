@@ -1,33 +1,36 @@
-import { Model, Types } from 'mongoose'
-import { IServiceRepository } from '../interface/service.repository'
-import Service, { IService } from '../models/service.model'
+import { ServiceRepository } from '../../domain/repositories/service.repository'
+import { Service } from '../../domain/entities/service.entity'
+import { ServiceModel } from '../models/service.model'
+import { ServiceMapper } from './mappers/service.mapper'
 
-export class ServiceRepository implements IServiceRepository {
-  private model: Model<IService>
-
-  constructor() {
-    this.model = Service
+export class MongoServiceRepository implements ServiceRepository {
+  async create(service: Service): Promise<Service> {
+    const persitenceData = ServiceMapper.toService(service)
+    const createdService = await ServiceModel.create(persitenceData)
+    return ServiceMapper.toDomain(createdService)
   }
 
-  async create(data: Partial<IService>): Promise<IService> {
-    const service = new Service(data)
-    return service.save()
+  async delete(id: string): Promise<void> {
+    await ServiceModel.findByIdAndDelete(id).exec()
   }
 
-  delete(id: string): Promise<IService | null> {
-    return Service.findByIdAndDelete(id).exec()
+  async findAll(): Promise<Service[]> {
+    const mongooseDocs = await ServiceModel.find().exec()
+    return mongooseDocs.map(ServiceMapper.toDomain)
   }
 
-  findAll(): Promise<IService[]> {
-    return Service.find().exec()
+  async findById(id: string): Promise<Service | null> {
+    const mongooseDocs = await ServiceModel.findById(id).exec()
+    return mongooseDocs ? ServiceMapper.toDomain(mongooseDocs) : null
   }
 
-  findById(id: string): Promise<IService | null> {
-    return Service.findById(id).exec()
-  }
-
-  update(id: string, data: Partial<IService>): Promise<IService | null> {
-    const objectId = new Types.ObjectId(id)
-    return Service.findByIdAndUpdate(objectId, data, { new: true }).exec()
+  async update(service: Service): Promise<Service | null> {
+    const persitenceData = ServiceMapper.toService(service)
+    const updateService = await ServiceModel.findByIdAndUpdate(
+      service.id,
+      persitenceData,
+      { new: true },
+    ).exec()
+    return updateService ? ServiceMapper.toDomain(updateService) : null
   }
 }

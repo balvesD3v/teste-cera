@@ -1,18 +1,25 @@
 import { Request, Response } from 'express'
-import { serviceSchema } from '../validators/service.validators'
 import { ZodError } from 'zod'
-import { ServiceRepository } from '../repositories/service.repository'
+import { CreateServiceUseCase } from '../../application/use-cases/create-service.usecase'
 
 export class CreateServiceController {
-  constructor(private readonly serviceRepository: ServiceRepository) {}
+  constructor(private readonly createServiceUseCase: CreateServiceUseCase) {}
 
   public async createService(req: Request, res: Response): Promise<Response> {
+    const { description, serviceDate, vehicleId, clientId, status, price } =
+      req.body
+
     try {
-      const validateDate = serviceSchema.parse(req.body)
+      const service = await this.createServiceUseCase.execute({
+        description,
+        serviceDate,
+        vehicleId,
+        clientId,
+        status,
+        price,
+      })
 
-      const newService = await this.serviceRepository.create(validateDate)
-
-      return res.status(201).json(newService)
+      return res.status(201).json(service)
     } catch (error) {
       if (error instanceof ZodError) {
         return res.status(400).json({ errors: error.errors })

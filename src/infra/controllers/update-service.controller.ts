@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
-import { ServiceRepository } from '../repositories/service.repository'
 import { ZodError } from 'zod'
 import { Types } from 'mongoose'
-import { serviceSchema } from '../validators/service.validators'
+import { ServiceRepository } from '../../domain/repositories/service.repository'
+import { serviceSchema } from '../../application/validators/service.validators'
 
 export class UpdateServiceController {
   constructor(private readonly serviceRepository: ServiceRepository) {}

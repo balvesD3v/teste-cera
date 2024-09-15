@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema, Types } from 'mongoose'
 
-export interface IService extends Document {
+export interface IServiceModel extends Document {
   description: string
   serviceDate: Date
   vehicleId: Types.ObjectId
@@ -9,7 +9,7 @@ export interface IService extends Document {
   price: number
 }
 
-const Service: Schema = new Schema({
+const serviceSchema: Schema = new Schema({
   description: {
     type: String,
     required: true,
@@ -36,4 +36,7 @@ const Service: Schema = new Schema({
   },
 })
 
-export default mongoose.model<IService>('Service', Service)
+export const ServiceModel = mongoose.model<IServiceModel>(
+  'Service',
+  serviceSchema,
+)
