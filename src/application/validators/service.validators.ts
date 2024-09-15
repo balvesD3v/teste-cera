@@ -1,15 +1,18 @@
 import { z } from 'zod'
-import { dateStringToDate } from '../../utils/dateToStringToDate.utils'
 import { objectIdSchema } from '../../utils/object.utils'
 
 export const serviceSchema = z.object({
   description: z.string().min(1, 'Descrição é obrigatória'),
   serviceDate: z
     .string()
-    .refine((date) => !isNaN(Date.parse(date)), {
-      message: 'Data inválida',
-    })
-    .transform(dateStringToDate),
+    .min(1, 'Data é obrigatória')
+    .transform((dateString) => {
+      const date = new Date(dateString)
+      if (isNaN(date.getTime())) {
+        throw new Error('Data inválida')
+      }
+      return date
+    }),
   vehicleId: objectIdSchema,
   clientId: objectIdSchema,
   status: z.enum(['pending', 'completed', 'canceled']),

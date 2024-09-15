@@ -1,9 +1,11 @@
+import mongoose from 'mongoose'
+
 export class Service {
   constructor(
     public readonly description: string,
     public readonly serviceDate: Date,
-    public readonly vehicleId: string,
-    public readonly clientId: string,
+    public readonly vehicleId: mongoose.Types.ObjectId,
+    public readonly clientId: mongoose.Types.ObjectId,
     public readonly status: 'pending' | 'completed' | 'canceled',
     public readonly price: number,
     public readonly id?: string,
@@ -27,7 +29,8 @@ export class Service {
       throw new Error('ID do veículo e ID do cliente são obrigatórios')
     }
 
-    if (!['peding', 'completed', 'canceled'].includes(this.status)) {
+    const validStatuses = ['pending', 'completed', 'canceled']
+    if (!validStatuses.includes(this.status)) {
       throw new Error('Status inválido')
     }
 

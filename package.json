@@ -6,8 +6,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "start": "node dist/app.js"
+    "dev": "ts-node-dev --respawn --transpile-only src/infra/server.ts",
+    "start": "node dist/infra/server.ts"
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.2.2",

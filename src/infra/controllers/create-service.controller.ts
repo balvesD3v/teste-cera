@@ -25,6 +25,8 @@ export class CreateServiceController {
         return res.status(400).json({ errors: error.errors })
       }
 
+      console.error('Erro interno:', error)
+
       return res
         .status(500)
         .json({ error: 'Erro intero do servidor, tente novamente mais tarde!' })
