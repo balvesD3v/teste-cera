@@ -10,7 +10,7 @@ export class MongoServiceRepository implements ServiceRepository {
     return ServiceMapper.toDomain(createdService)
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(id: string): Promise<void | null> {
     await ServiceModel.findByIdAndDelete(id).exec()
   }
 

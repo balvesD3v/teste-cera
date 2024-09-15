@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { ServiceRepository } from '../repositories/service.repository'
+import { ServiceRepository } from '../../domain/repositories/service.repository'
 
 export class DeleteServiceController {
   constructor(private readonly serviceRepository: ServiceRepository) {}
