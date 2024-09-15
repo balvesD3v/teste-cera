@@ -5,5 +5,5 @@ export interface ServiceRepository {
   findById(id: string): Promise<Service | null>
   create(data: Partial<Service>): Promise<Service>
   update(service: Service): Promise<Service | null>
-  delete(id: string): Promise<void>
+  delete(id: string): Promise<void | null>
 }

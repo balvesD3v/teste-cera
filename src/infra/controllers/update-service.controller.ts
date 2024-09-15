@@ -1,38 +1,18 @@
 import { Request, Response } from 'express'
 import { ZodError } from 'zod'
-import { Types } from 'mongoose'
-import { ServiceRepository } from '../../domain/repositories/service.repository'
-import { serviceSchema } from '../../application/validators/service.validators'
+import { UpdateServiceUseCase } from '../../application/use-cases/update-service.usecase'
+import { ServiceMapper } from '../repositories/mappers/service.mapper'
 
 export class UpdateServiceController {
-  constructor(private readonly serviceRepository: ServiceRepository) {}
-
-  private convertToObjectId(id: string | Types.ObjectId): Types.ObjectId {
-    if (typeof id === 'string') {
-      return new Types.ObjectId(id)
-    }
-    return id
-  }
+  constructor(private readonly updateServiceUseCase: UpdateServiceUseCase) {}
 
   public async updateService(req: Request, res: Response): Promise<Response> {
     const { id } = req.params
+    const updateData = { ...req.body, id }
 
     try {
-      const validatedData = serviceSchema.partial().parse(req.body)
-
-      if (validatedData.vehicleId) {
-        validatedData.vehicleId = this.convertToObjectId(
-          validatedData.vehicleId,
-        )
-      }
-      if (validatedData.clientId) {
-        validatedData.clientId = this.convertToObjectId(validatedData.clientId)
-      }
-
-      const updatedService = await this.serviceRepository.update(
-        id,
-        validatedData,
-      )
+      const service = ServiceMapper.toDomain(updateData)
+      const updatedService = await this.updateServiceUseCase.execute(service)
 
       if (!updatedService) {
         return res.status(404).json({ error: 'Serviço não encontrado' })
