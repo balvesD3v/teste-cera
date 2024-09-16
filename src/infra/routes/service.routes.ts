@@ -9,6 +9,7 @@ import { CreateServiceUseCase } from '../../domain/application/use-cases/create-
 import { UpdateServiceUseCase } from '../../domain/application/use-cases/update-service.usecase'
 import { DeleteServiceUseCase } from '../../domain/application/use-cases/delete-service.usecase'
 import { GetAllServiceUseCase } from '../../domain/application/use-cases/get-all-service.usecase'
+import { GetByIdServiceUseCase } from '../../domain/application/use-cases/get-by-id-service.usecase'
 
 const router = Router()
 const serviceRepository = new MongoServiceRepository()
@@ -17,6 +18,7 @@ const createServiceUseCase = new CreateServiceUseCase(serviceRepository)
 const updateServiceUseCase = new UpdateServiceUseCase(serviceRepository)
 const deleteServiceUseCase = new DeleteServiceUseCase(serviceRepository)
 const getAllServiceUseCase = new GetAllServiceUseCase(serviceRepository)
+const getByIdServiceUseCase = new GetByIdServiceUseCase(serviceRepository)
 
 const createServiceController = new CreateServiceController(
   createServiceUseCase,
@@ -30,8 +32,9 @@ const deleteServiceController = new DeleteServiceController(
 const getAllServiceController = new GetAllServiceController(
   getAllServiceUseCase,
 )
-
-const getByIdServiceController = new GetByIdServiceController(serviceRepository)
+const getByIdServiceController = new GetByIdServiceController(
+  getByIdServiceUseCase,
+)
 
 router.post('/services', (req, res) =>
   createServiceController.createService(req, res),
