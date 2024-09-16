@@ -10,11 +10,6 @@ export class UpdateServiceController {
       const { description, serviceDate, vehicleId, clientId, status, price } =
         req.body
 
-      if (!id) {
-        res.status(400).json({ error: 'ID do serviço é obrigatório' })
-        return
-      }
-
       const updateServiceRequest = {
         serviceId: id,
         description,
@@ -30,7 +25,6 @@ export class UpdateServiceController {
 
       res.status(200).json(updatedService)
     } catch (error) {
-      console.error('Error updating service:', error)
       res.status(500).json({ error: 'Erro ao atualizar o serviço' })
     }
   }

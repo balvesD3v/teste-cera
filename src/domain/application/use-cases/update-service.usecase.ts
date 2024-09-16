@@ -42,10 +42,6 @@ export class UpdateServiceUseCase {
 
       return service
     } catch (error) {
-      console.error('Error updating service:', error)
-
-      console.log(error)
-
       throw new Error('Erro ao atualizar o serviço')
     }
   }

@@ -7,8 +7,18 @@ export class GetByIdServiceController {
   async handle(req: Request, res: Response) {
     const { id } = req.params
 
-    const service = await this.getByIdServiceUseCase.execute({ serviceId: id })
+    try {
+      const service = await this.getByIdServiceUseCase.execute({
+        serviceId: id,
+      })
 
-    return res.status(200).json(service)
+      if (!service) {
+        return res.status(404).json({ error: 'Serviço não encontrado' })
+      }
+
+      return res.status(200).json(service)
+    } catch (error) {
+      return res.status(500).json({ error: 'Erro interno do servidor' })
+    }
   }
 }
