@@ -1,5 +1,4 @@
 import mongoose, { Document, Schema } from 'mongoose'
-import { string } from 'zod'
 
 export interface IServiceModel extends Document {
   description: string
@@ -11,6 +10,10 @@ export interface IServiceModel extends Document {
 }
 
 const serviceSchema: Schema = new Schema({
+  _id: {
+    type: String,
+    default: () => new mongoose.Types.ObjectId().toHexString(),
+  },
   description: {
     type: String,
     required: true,

@@ -1,34 +1,40 @@
 import { Request, Response } from 'express'
-import { z } from 'zod'
 import { UpdateServiceUseCase } from '../../domain/application/use-cases/update-service.usecase'
-import { updateServiceSchema } from '../../domain/application/validators/createService.validators'
 
 export class UpdateServiceController {
   constructor(private readonly updateServiceUseCase: UpdateServiceUseCase) {}
 
-  public async updateService(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params
-    const updates = req.body
-
+  async updateService(req: Request, res: Response): Promise<void> {
     try {
-      const validatedUpdates = updateServiceSchema.parse(updates)
+      const id = req.params.id // Extrai o ID dos parâmetros da requisição
+      const { description, serviceDate, vehicleId, clientId, status, price } =
+        req.body
 
-      const updatedService = await this.updateServiceUseCase.execute(
-        id,
-        validatedUpdates,
-      )
-
-      if (!updatedService) {
-        return res.status(404).json({ error: 'Serviço não encontrado' })
+      // Verifica se o ID foi fornecido
+      if (!id) {
+        res.status(400).json({ error: 'ID do serviço é obrigatório' })
+        return
       }
 
-      return res.status(200).json(updatedService)
-    } catch (error: any) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ error: error.errors })
+      // Cria o request do use case
+      const updateServiceRequest = {
+        serviceId: id,
+        description,
+        serviceDate,
+        vehicleId, // Assumindo que este valor é fornecido como string ou UUID
+        clientId, // Assumindo que este valor é fornecido como string ou UUID
+        status,
+        price,
       }
 
-      return res.status(500).json({ error: error.message })
+      // Chama o use case
+      const updatedService =
+        await this.updateServiceUseCase.execute(updateServiceRequest)
+
+      res.status(200).json(updatedService)
+    } catch (error) {
+      console.error('Error updating service:', error)
+      res.status(500).json({ error: 'Erro ao atualizar o serviço' })
     }
   }
 }

@@ -35,9 +35,32 @@ export class Service extends Entity<ServiceProps> {
     return this.props.price
   }
 
+  updateDescription(description: string) {
+    this.props.description = description
+  }
+
+  updateServiceDate(serviceDate: Date) {
+    this.props.serviceDate = serviceDate
+  }
+
+  updateVehicleId(vehicleId: UniqueEntityId) {
+    this.props.vehicleId = vehicleId
+  }
+
+  updateClientId(clientId: UniqueEntityId) {
+    this.props.clientId = clientId
+  }
+
+  updateStatus(status: 'pending' | 'completed' | 'canceled') {
+    this.props.status = status
+  }
+
+  updatePrice(price: number) {
+    this.props.price = price
+  }
+
   static create(props: ServiceProps, id?: UniqueEntityId) {
     const service = new Service(props, id)
-
     return service
   }
 }

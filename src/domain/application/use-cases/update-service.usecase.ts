@@ -1,25 +1,51 @@
+import { UniqueEntityId } from '../../../core/entities/unique-entity-id'
 import { Service } from '../../enterprise/entities/service.entity'
 import { ServiceRepository } from '../../enterprise/repositories/service.repository'
+
+interface UpdateServiceUseCaseRequest {
+  serviceId: string
+  description: string
+  serviceDate: Date
+  vehicleId: UniqueEntityId
+  clientId: UniqueEntityId
+  status: 'pending' | 'completed' | 'canceled'
+  price: number
+}
 
 export class UpdateServiceUseCase {
   constructor(private readonly serviceRepository: ServiceRepository) {}
 
-  async execute(
-    id: string,
-    updates: Partial<Service>,
-  ): Promise<Service | null> {
-    if (!id || typeof id !== 'string') {
-      throw new Error('ID inválido')
-    }
-
+  async execute({
+    serviceId,
+    clientId,
+    vehicleId,
+    description,
+    price,
+    serviceDate,
+    status,
+  }: UpdateServiceUseCaseRequest): Promise<Service> {
     try {
-      const updatedService = await this.serviceRepository.update(id, updates)
-      if (!updatedService) {
-        throw new Error('Serviço não encontrado')
+      const service = await this.serviceRepository.findById(serviceId)
+
+      if (!service) {
+        throw new Error('Serviço não existe')
       }
-      return updatedService
+
+      service.updateDescription(description)
+      service.updatePrice(price)
+      service.updateServiceDate(serviceDate)
+      service.updateStatus(status)
+      service.updateClientId(clientId)
+      service.updateVehicleId(vehicleId)
+
+      await this.serviceRepository.update(service)
+
+      return service
     } catch (error) {
-      console.error('Erro ao atualizar o serviço:', error)
+      console.error('Error updating service:', error)
+
+      console.log(error)
+
       throw new Error('Erro ao atualizar o serviço')
     }
   }

@@ -20,14 +20,20 @@ export class MongoServiceRepository implements ServiceRepository {
   }
 
   async findById(id: string): Promise<Service | null> {
-    const mongooseDocs = await ServiceModel.findById(id).exec()
-    return mongooseDocs ? ServiceMapper.toDomain(mongooseDocs) : null
+    const service = await ServiceModel.findById(id).exec()
+    console.log(service)
+
+    if (!service) {
+      return null
+    }
+
+    return ServiceMapper.toDomain(service)
   }
 
-  async update(id: string, updates: Partial<Service>): Promise<Service | null> {
-    const updateService = await ServiceModel.findByIdAndUpdate(id, updates, {
+  async update(service: Service): Promise<void> {
+    const serviceData = ServiceMapper.toService(service)
+    await ServiceModel.findByIdAndUpdate(service.id.toString(), serviceData, {
       new: true,
     }).exec()
-    return updateService ? ServiceMapper.toDomain(updateService) : null
   }
 }
