@@ -4,7 +4,7 @@ import { GetAllServiceController } from '../controllers/get-all-services.control
 import { GetByIdServiceController } from '../controllers/get-by-id-services.controller'
 import { DeleteServiceController } from '../controllers/delete-service.controller'
 import { UpdateServiceController } from '../controllers/update-service.controller'
-import { MongoServiceRepository } from '../repositories/service.repository'
+import { MongoServiceRepository } from '../database/repositories/service.repository'
 import { CreateServiceUseCase } from '../../domain/application/use-cases/create-service.usecase'
 import { UpdateServiceUseCase } from '../../domain/application/use-cases/update-service.usecase'
 

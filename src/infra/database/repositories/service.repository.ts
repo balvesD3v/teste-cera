@@ -1,7 +1,7 @@
-import { Service } from '../../domain/enterprise/entities/service.entity'
-import { ServiceRepository } from '../../domain/enterprise/repositories/service.repository'
-import { ServiceModel } from '../models/service.model'
-import { ServiceMapper } from './mappers/service.mapper'
+import { Service } from '../../../domain/enterprise/entities/service.entity'
+import { ServiceRepository } from '../../../domain/enterprise/repositories/service.repository'
+import { ServiceModel } from '../../models/service.model'
+import { ServiceMapper } from '../mappers/service.mapper'
 
 export class MongoServiceRepository implements ServiceRepository {
   async create(service: Service): Promise<Service> {

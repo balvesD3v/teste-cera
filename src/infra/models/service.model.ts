@@ -10,10 +10,6 @@ export interface IServiceModel extends Document {
 }
 
 const serviceSchema: Schema = new Schema({
-  _id: {
-    type: String,
-    default: () => new mongoose.Types.ObjectId().toHexString(),
-  },
   description: {
     type: String,
     required: true,
@@ -23,11 +19,11 @@ const serviceSchema: Schema = new Schema({
     required: true,
   },
   vehicleId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true,
   },
   clientId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true,
   },
   status: {
