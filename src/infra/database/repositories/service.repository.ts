@@ -1,6 +1,6 @@
-import { Service } from '../../../domain/enterprise/entities/service.entity'
-import { ServiceRepository } from '../../../domain/enterprise/repositories/service.repository'
-import { ServiceModel } from '../../models/service.model'
+import { ServiceRepository } from '@/domain/enterprise/repositories/service.repository'
+import { Service } from '@/domain/enterprise/entities/service.entity'
+import { ServiceModel } from '@/infra/models/service.model'
 import { ServiceMapper } from '../mappers/service.mapper'
 
 export class MongoServiceRepository implements ServiceRepository {

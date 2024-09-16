@@ -1,4 +1,4 @@
-import { ServiceRepository } from '../../enterprise/repositories/service.repository'
+import { ServiceRepository } from '@/domain/enterprise/repositories/service.repository'
 
 interface DeleteServiceUseCaseRequest {
   serviceId: string

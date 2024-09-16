@@ -1,6 +1,6 @@
-import { UniqueEntityId } from '../../../core/entities/unique-entity-id'
-import { Service } from '../../enterprise/entities/service.entity'
-import { ServiceRepository } from '../../enterprise/repositories/service.repository'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
+import { Service } from '@/domain/enterprise/entities/service.entity'
+import { ServiceRepository } from '@/domain/enterprise/repositories/service.repository'
 
 interface CreateServiceUseCaseRequest {
   description: string

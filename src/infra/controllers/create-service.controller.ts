@@ -1,6 +1,6 @@
+import { CreateServiceUseCase } from '@/domain/application/use-cases/create-service.usecase'
 import { Request, Response } from 'express'
 import { ZodError } from 'zod'
-import { CreateServiceUseCase } from '../../domain/application/use-cases/create-service.usecase'
 
 export class CreateServiceController {
   constructor(private readonly createServiceUseCase: CreateServiceUseCase) {}

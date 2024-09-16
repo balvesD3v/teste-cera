@@ -1,5 +1,5 @@
+import { UpdateServiceUseCase } from '@/domain/application/use-cases/update-service.usecase'
 import { Request, Response } from 'express'
-import { UpdateServiceUseCase } from '../../domain/application/use-cases/update-service.usecase'
 
 export class UpdateServiceController {
   constructor(private readonly updateServiceUseCase: UpdateServiceUseCase) {}
