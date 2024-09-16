@@ -1,6 +1,6 @@
-import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { Service } from '@/domain/enterprise/entities/service.entity'
-import { IServiceModel } from '@/infra/models/service.model'
+import { UniqueEntityId } from '../../../core/entities/unique-entity-id'
+import { Service } from '../../../domain/enterprise/entities/service.entity'
+import { IServiceModel } from '../../models/service.model'
 
 export class ServiceMapper {
   static toDomain(raw: IServiceModel): Service {

@@ -1,15 +1,11 @@
-import { ServiceRepository } from '@/domain/enterprise/repositories/service.repository'
 import { Request, Response } from 'express'
+import { GetAllServiceUseCase } from '../../domain/application/use-cases/get-all-service.usecase'
 
 export class GetAllServiceController {
-  constructor(private readonly serviceRepository: ServiceRepository) {}
+  constructor(private readonly getAllServiceUseCase: GetAllServiceUseCase) {}
 
-  public async getAllService(req: Request, res: Response): Promise<Response> {
-    try {
-      const services = await this.serviceRepository.findAll()
-      return res.status(200).json(services)
-    } catch (error) {
-      return res.status(500).json({ error: 'Erro interno do servidor' })
-    }
+  public async getAllService(req: Request, res: Response) {
+    const services = await this.getAllServiceUseCase.execute()
+    return res.status(200).json(services)
   }
 }

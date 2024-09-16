@@ -1,5 +1,5 @@
-import { objectIdSchema } from '@/infra/utils/object.utils'
 import { z } from 'zod'
+import { objectIdSchema } from '../../../infra/utils/object.utils'
 
 export const serviceSchema = z.object({
   description: z.string().min(1, 'Descrição é obrigatória'),

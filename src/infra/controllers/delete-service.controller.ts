@@ -1,5 +1,5 @@
-import { DeleteServiceUseCase } from '@/domain/application/use-cases/delete-service.usecase'
 import { Request, Response } from 'express'
+import { DeleteServiceUseCase } from '../../domain/application/use-cases/delete-service.usecase'
 
 export class DeleteServiceController {
   constructor(private readonly deleteServiceUseCase: DeleteServiceUseCase) {}
