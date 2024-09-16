@@ -22,6 +22,6 @@ export class DeleteServiceController {
       return res.status(400).json({ error: 'Um erro inesperado ocorreu' })
     }
 
-    return res.status(200).json({ message: 'Service deleted successfully' })
+    return res.status(200).json({ message: 'Serviço deletado com sucesso' })
   }
 }

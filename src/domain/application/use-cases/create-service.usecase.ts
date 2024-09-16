@@ -1,4 +1,6 @@
+import { Either, left, right } from '../../../core/either'
 import { UniqueEntityId } from '../../../core/entities/unique-entity-id'
+import { BadRequestException } from '../../../core/errors/errors/BadRequestException'
 import { Service } from '../../enterprise/entities/service.entity'
 import { ServiceRepository } from '../../enterprise/repositories/service.repository'
 
@@ -11,6 +13,13 @@ interface CreateServiceUseCaseRequest {
   price: number
 }
 
+type CreateServiceUseCaseResponse = Either<
+  BadRequestException,
+  {
+    service: Service
+  }
+>
+
 export class CreateServiceUseCase {
   constructor(private readonly serviceRepository: ServiceRepository) {}
 
@@ -21,7 +30,7 @@ export class CreateServiceUseCase {
     serviceDate,
     status,
     vehicleId,
-  }: CreateServiceUseCaseRequest): Promise<Service> {
+  }: CreateServiceUseCaseRequest): Promise<CreateServiceUseCaseResponse> {
     const service = Service.create({
       clientId: new UniqueEntityId(clientId),
       vehicleId: new UniqueEntityId(vehicleId),
@@ -31,6 +40,21 @@ export class CreateServiceUseCase {
       status,
     })
 
-    return await this.serviceRepository.create(service)
+    if (
+      !description ||
+      !serviceDate ||
+      !vehicleId ||
+      !clientId ||
+      !status ||
+      !price
+    ) {
+      return left(new BadRequestException('Todos os campos são obrigatórios'))
+    }
+
+    await this.serviceRepository.create(service)
+
+    return right({
+      service,
+    })
   }
 }

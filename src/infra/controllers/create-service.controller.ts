@@ -8,7 +8,7 @@ export class CreateServiceController {
     const { description, serviceDate, vehicleId, clientId, status, price } =
       req.body
 
-    const service = await this.createServiceUseCase.execute({
+    const result = await this.createServiceUseCase.execute({
       description,
       serviceDate,
       vehicleId,
@@ -17,6 +17,10 @@ export class CreateServiceController {
       price,
     })
 
-    return res.status(201).json(service)
+    if (result.isLeft()) {
+      return res.status(400).json({ message: result.value.message })
+    }
+
+    return res.status(201).json(result)
   }
 }
