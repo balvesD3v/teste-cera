@@ -5,7 +5,12 @@ export class GetAllServiceController {
   constructor(private readonly getAllServiceUseCase: GetAllServiceUseCase) {}
 
   async handle(req: Request, res: Response) {
-    const services = await this.getAllServiceUseCase.execute()
-    return res.status(200).json(services)
+    const result = await this.getAllServiceUseCase.execute()
+
+    if (result.isLeft()) {
+      return res.status(400).json({ message: result.value.message })
+    }
+
+    return res.status(200).json(result)
   }
 }
