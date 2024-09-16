@@ -4,7 +4,7 @@ import { UpdateServiceUseCase } from '../../domain/application/use-cases/update-
 export class UpdateServiceController {
   constructor(private readonly updateServiceUseCase: UpdateServiceUseCase) {}
 
-  async updateService(req: Request, res: Response): Promise<void> {
+  async handle(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params
       const { description, serviceDate, vehicleId, clientId, status, price } =

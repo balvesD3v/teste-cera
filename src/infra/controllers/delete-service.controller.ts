@@ -4,7 +4,7 @@ import { DeleteServiceUseCase } from '../../domain/application/use-cases/delete-
 export class DeleteServiceController {
   constructor(private readonly deleteServiceUseCase: DeleteServiceUseCase) {}
 
-  public async deleteService(req: Request, res: Response): Promise<void> {
+  async handle(req: Request, res: Response): Promise<void> {
     const { id } = req.params
 
     const deleteServiceRequest = {

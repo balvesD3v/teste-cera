@@ -36,20 +36,16 @@ const getByIdServiceController = new GetByIdServiceController(
   getByIdServiceUseCase,
 )
 
-router.post('/services', (req, res) =>
-  createServiceController.createService(req, res),
-)
-router.get('/services', (req, res) =>
-  getAllServiceController.getAllService(req, res),
-)
+router.post('/services', (req, res) => createServiceController.handle(req, res))
+router.get('/services', (req, res) => getAllServiceController.handle(req, res))
 router.get('/services/:id', (req, res) =>
-  getByIdServiceController.getByIdService(req, res),
+  getByIdServiceController.handle(req, res),
 )
 router.delete('/services/:id', (req, res) =>
-  deleteServiceController.deleteService(req, res),
+  deleteServiceController.handle(req, res),
 )
 router.put('/services/:id', (req, res) =>
-  updateServiceController.updateService(req, res),
+  updateServiceController.handle(req, res),
 )
 
 export default router

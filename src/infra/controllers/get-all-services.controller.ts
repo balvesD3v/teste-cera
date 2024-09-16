@@ -4,7 +4,7 @@ import { GetAllServiceUseCase } from '../../domain/application/use-cases/get-all
 export class GetAllServiceController {
   constructor(private readonly getAllServiceUseCase: GetAllServiceUseCase) {}
 
-  public async getAllService(req: Request, res: Response) {
+  async handle(req: Request, res: Response) {
     const services = await this.getAllServiceUseCase.execute()
     return res.status(200).json(services)
   }

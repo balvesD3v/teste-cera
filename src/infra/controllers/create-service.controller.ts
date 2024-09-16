@@ -5,7 +5,7 @@ import { CreateServiceUseCase } from '../../domain/application/use-cases/create-
 export class CreateServiceController {
   constructor(private readonly createServiceUseCase: CreateServiceUseCase) {}
 
-  async createService(req: Request, res: Response): Promise<Response> {
+  async handle(req: Request, res: Response): Promise<Response> {
     const { description, serviceDate, vehicleId, clientId, status, price } =
       req.body
 
