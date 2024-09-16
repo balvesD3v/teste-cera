@@ -9,7 +9,6 @@ export class BadRequestException extends Error {
     this.message = message
     this.error = error
 
-    // Preserve the stack trace (optional, for better debugging)
     Error.captureStackTrace(this, this.constructor)
   }
 }

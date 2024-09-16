@@ -21,7 +21,6 @@ export class MongoServiceRepository implements ServiceRepository {
 
   async findById(id: string): Promise<Service | null> {
     const service = await ServiceModel.findById(id).exec()
-    console.log(service)
 
     if (!service) {
       return null
