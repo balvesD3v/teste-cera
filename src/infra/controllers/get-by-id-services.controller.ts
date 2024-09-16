@@ -1,5 +1,7 @@
 import { Request, Response } from 'express'
 import { GetByIdServiceUseCase } from '../../domain/application/use-cases/get-by-id-service.usecase'
+import { isValidId } from '../utils/id-validator'
+import { BadRequestException } from '../../core/errors/errors/BadRequestException'
 
 export class GetByIdServiceController {
   constructor(private readonly getByIdServiceUseCase: GetByIdServiceUseCase) {}
@@ -7,18 +9,19 @@ export class GetByIdServiceController {
   async handle(req: Request, res: Response) {
     const { id } = req.params
 
-    try {
-      const service = await this.getByIdServiceUseCase.execute({
-        serviceId: id,
-      })
-
-      if (!service) {
-        return res.status(404).json({ error: 'Serviço não encontrado' })
-      }
-
-      return res.status(200).json(service)
-    } catch (error) {
-      return res.status(500).json({ error: 'Erro interno do servidor' })
+    if (!isValidId(id)) {
+      const error = new BadRequestException('Serviço não existe')
+      return res.status(400).json({ message: error.message })
     }
+
+    const result = await this.getByIdServiceUseCase.execute({
+      serviceId: id,
+    })
+
+    if (!result.isLeft()) {
+      return res.status(400).json({ message: result.value })
+    }
+
+    return res.status(200).json(result)
   }
 }

@@ -1,14 +1,8 @@
-export class BadRequestException extends Error {
-  public readonly statusCode: number
-  public readonly message: string
-  public readonly error: string
+import { UseCaseError } from '../use-case-error'
 
-  constructor(message: string, error = 'Bad Request') {
+export class BadRequestException extends Error implements UseCaseError {
+  constructor(message: string) {
     super(message)
-    this.statusCode = 400
-    this.message = message
-    this.error = error
-
-    Error.captureStackTrace(this, this.constructor)
+    this.name = 'BadRequestException'
   }
 }

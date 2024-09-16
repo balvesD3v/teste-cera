@@ -12,7 +12,8 @@ export class UpdateServiceController {
       req.body
 
     if (!isValidId(id)) {
-      return res.status(400).json(new BadRequestException(''))
+      const error = new BadRequestException('Serviço não existe')
+      return res.status(400).json({ message: error.message })
     }
 
     const updateServiceRequest = {
