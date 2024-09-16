@@ -1,22 +1,19 @@
 import { Request, Response } from 'express'
-import { ServiceRepository } from '../../domain/enterprise/repositories/service.repository'
+import { DeleteServiceUseCase } from '../../domain/application/use-cases/delete-service.usecase'
 
 export class DeleteServiceController {
-  constructor(private readonly serviceRepository: ServiceRepository) {}
+  constructor(private readonly deleteServiceUseCase: DeleteServiceUseCase) {}
 
-  public async deleteService(req: Request, res: Response): Promise<Response> {
+  public async deleteService(req: Request, res: Response): Promise<void> {
     const { id } = req.params
 
-    try {
-      const deletedService = await this.serviceRepository.delete(id)
-
-      if (!deletedService) {
-        return res.status(404).json({ error: 'Serviço não encontrado' })
-      }
-
-      return res.status(200).json({ message: 'Serviço deletado com sucesso' })
-    } catch (error) {
-      return res.status(500).json({ error: 'Erro interno do servidor' })
+    const deleteServiceRequest = {
+      serviceId: id,
     }
+
+    const deletedService =
+      await this.deleteServiceUseCase.execute(deleteServiceRequest)
+
+    res.status(200).json(deletedService)
   }
 }
