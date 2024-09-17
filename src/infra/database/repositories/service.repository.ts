@@ -4,10 +4,9 @@ import { ServiceModel } from '../../models/service.model'
 import { ServiceMapper } from '../mappers/service.mapper'
 
 export class MongoServiceRepository implements ServiceRepository {
-  async create(service: Service): Promise<Service> {
+  async create(service: Service): Promise<void> {
     const persitenceData = ServiceMapper.toService(service)
-    const createdService = await ServiceModel.create(persitenceData)
-    return ServiceMapper.toDomain(createdService)
+    await ServiceModel.create(persitenceData)
   }
 
   async delete(service: Service): Promise<void> {
