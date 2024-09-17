@@ -1,5 +1,5 @@
 import { UniqueEntityId } from '../../../core/entities/unique-entity-id'
-import { Service } from '../../../domain/enterprise/entities/service.entity'
+import { Service } from '../../../domain/enterprise/entities/service'
 import { IServiceModel } from '../../models/service.model'
 
 export class ServiceMapper {

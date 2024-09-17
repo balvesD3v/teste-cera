@@ -1,6 +1,6 @@
 import { Either, left, right } from '../../../core/either'
 import { ServiceNotFoundError } from '../../../core/errors/errors/ServiceNotFoundError'
-import { Service } from '../../enterprise/entities/service.entity'
+import { Service } from '../../enterprise/entities/service'
 import { ServiceRepository } from '../repositories/service.repository'
 
 type GetAllServiceUseCaseResponse = Either<
