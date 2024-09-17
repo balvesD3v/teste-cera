@@ -21,6 +21,10 @@ export class GetByIdServiceUseCase {
   async execute({
     serviceId,
   }: GetByIdServiceUseCaseRequest): Promise<GetByIdServiceUseCaseResponse> {
+    if (!serviceId || serviceId.trim() === '') {
+      return left(new BadRequestException('serviceId não pode ser vazio'))
+    }
+
     const service = await this.serviceRepository.findById(serviceId)
 
     if (!service) {
