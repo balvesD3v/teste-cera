@@ -1,6 +1,6 @@
 import { Either, left, right } from '../../../core/either'
 import { ServiceNotFoundError } from '../../../core/errors/errors/ServiceNotFoundError'
-import { ServiceRepository } from '../../enterprise/repositories/service.repository'
+import { ServiceRepository } from '../repositories/service.repository'
 
 interface DeleteServiceUseCaseRequest {
   serviceId: string

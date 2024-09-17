@@ -1,4 +1,4 @@
-import { Service } from '../entities/service.entity'
+import { Service } from '../../enterprise/entities/service.entity'
 
 export interface ServiceRepository {
   findAll(): Promise<Service[] | null>

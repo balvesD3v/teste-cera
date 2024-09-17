@@ -1,5 +1,5 @@
+import { ServiceRepository } from '../../../domain/application/repositories/service.repository'
 import { Service } from '../../../domain/enterprise/entities/service.entity'
-import { ServiceRepository } from '../../../domain/enterprise/repositories/service.repository'
 import { ServiceModel } from '../../models/service.model'
 import { ServiceMapper } from '../mappers/service.mapper'
 

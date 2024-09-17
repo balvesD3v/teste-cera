@@ -2,7 +2,7 @@ import { Either, left, right } from '../../../core/either'
 import { UniqueEntityId } from '../../../core/entities/unique-entity-id'
 import { BadRequestException } from '../../../core/errors/errors/BadRequestException'
 import { Service } from '../../enterprise/entities/service.entity'
-import { ServiceRepository } from '../../enterprise/repositories/service.repository'
+import { ServiceRepository } from '../repositories/service.repository'
 
 interface CreateServiceUseCaseRequest {
   description: string
