@@ -14,7 +14,7 @@ export class GetAllServiceUseCase {
   async execute(): Promise<GetAllServiceUseCaseResponse> {
     const services = await this.serviceRepository.findAll()
 
-    if (!services) {
+    if (!services || services.length === 0) {
       return left(new ServiceNotFoundError())
     }
 
