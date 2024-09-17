@@ -8,7 +8,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "ts-node-dev --respawn --transpile-only src/infra/server.ts",
-    "start": "node dist/infra/server.ts"
+    "start": "node dist/infra/server.ts",
+    "test": "vitest"
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.2.2",
@@ -18,6 +19,7 @@
     "eslint": "^8.57.0",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "vitest": "^2.1.1"
   }
 }
