@@ -60,7 +60,6 @@ export class Service extends Entity<ServiceProps> {
   }
 
   static create(props: ServiceProps, id?: UniqueEntityId) {
-    const service = new Service(props, id)
-    return service
+    return new Service(props, id)
   }
 }

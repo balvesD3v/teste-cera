@@ -21,8 +21,6 @@ export class CreateServiceController {
       return res.status(400).json({ message: result.value.message })
     }
 
-    console.log(result)
-
     return res.status(201).json(result)
   }
 }

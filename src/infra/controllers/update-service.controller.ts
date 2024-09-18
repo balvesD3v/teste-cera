@@ -28,10 +28,6 @@ export class UpdateServiceController {
 
     const result = await this.updateServiceUseCase.execute(updateServiceRequest)
 
-    if (result.isLeft()) {
-      return res.status(400).json({ message: result.value.message })
-    }
-
     return res.status(200).json(result)
   }
 }

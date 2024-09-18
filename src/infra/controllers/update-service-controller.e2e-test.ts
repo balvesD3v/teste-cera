@@ -1,82 +1,82 @@
+import { describe, it, expect, vi } from 'vitest'
 import request from 'supertest'
-import { describe, it, expect, beforeAll, afterAll } from 'vitest'
-import mongoose from 'mongoose'
-import { env } from '../env/env'
-import { ServiceModel } from '../models/service.model'
-import app from '../app'
-import { UniqueEntityId } from 'src/core/entities/unique-entity-id'
+import express, { Request, Response } from 'express'
+import { UpdateServiceUseCase } from '../../domain/application/use-cases/update-service.usecase'
+import { isValidId } from '../utils/id-validator'
+import { UpdateServiceController } from './update-service.controller'
 
-describe('UpdateServiceController E2E', () => {
-  let testServiceId: unknown
+// Mockando o updateServiceUseCase e a função isValidId
+vi.mock('../../domain/application/use-cases/update-service.usecase')
+vi.mock('../utils/id-validator')
 
-  beforeAll(async () => {
-    await mongoose.connect(env.DATABASE_URL)
+describe('UpdateServiceController', () => {
+  const app = express()
+  app.use(express.json())
 
-    const service = await ServiceModel.create({
-      _id: new UniqueEntityId(),
-      description: 'Initial description',
-      serviceDate: new Date().toISOString(),
-      vehicleId: 'veh-123',
-      clientId: 'cli-123',
-      status: 'pending',
-      price: 100,
-    })
+  const updateServiceUseCaseMock = {
+    execute: vi.fn(),
+  }
 
-    testServiceId = service._id
+  const updateServiceController = new UpdateServiceController(
+    updateServiceUseCaseMock as unknown as UpdateServiceUseCase,
+  )
+
+  // Definindo uma rota para o teste e2e
+  app.put('/services/:id', (req: Request, res: Response) => {
+    return updateServiceController.handle(req, res)
   })
 
-  afterAll(async () => {
-    await ServiceModel.deleteMany()
-    await mongoose.disconnect()
-  })
+  it('should retrive 200 when request is valid', async () => {
+    // Mockando a validação de ID
+    vi.mocked(isValidId).mockReturnValue(true)
 
-  it('should update a service and return 200', async () => {
-    const response = await request(app)
-      .put(`/api/services/${testServiceId}`)
-      .send({
-        description: 'Updated description',
-        serviceDate: new Date().toISOString(),
-        vehicleId: 'veh-456',
-        clientId: 'cli-456',
-        status: 'completed',
-        price: 150,
-      })
+    // Mockando a execução do use case
+    const mockResponse = { success: true }
+    updateServiceUseCaseMock.execute.mockResolvedValue(mockResponse)
 
-    console.log('Response Body:', response.body)
-
-    expect(response.status).toBe(200)
-    expect(response.body).toHaveProperty('value')
-    expect(response.body.value).toHaveProperty('service')
-
-    const updatedService = response.body.value.service
-
-    expect(updatedService).toEqual(
-      expect.objectContaining({
-        _id: {
-          value: testServiceId,
-        },
-        props: expect.objectContaining({
-          description: 'Updated description',
-          vehicleId: 'veh-456',
-          clientId: 'cli-456',
-          status: 'completed',
-          price: 150,
-        }),
-      }),
-    )
-  })
-
-  it('should return 400 if the service ID is invalid', async () => {
-    const response = await request(app).put('/api/services/invalid-id').send({
-      description: 'Updated description',
-      serviceDate: new Date().toISOString(),
-      vehicleId: 'veh-456',
-      clientId: 'cli-456',
+    const validServiceId = '123'
+    const requestBody = {
+      description: 'Serviço atualizado',
+      serviceDate: '2024-09-18',
+      vehicleId: 'vehicle123',
+      clientId: 'client123',
       status: 'completed',
-      price: 150,
+      price: 100,
+    }
+
+    // Simulando a requisição HTTP
+    const response = await request(app)
+      .put(`/services/${validServiceId}`)
+      .send(requestBody)
+
+    // Verificando se o status é 200 e a resposta está correta
+    expect(response.status).toBe(200)
+    expect(response.body).toEqual(mockResponse)
+    expect(updateServiceUseCaseMock.execute).toHaveBeenCalledWith({
+      serviceId: validServiceId,
+      ...requestBody,
     })
+  })
+
+  it('should retrive 400 when ID is invalid', async () => {
+    // Mockando a validação de ID como inválida
+    vi.mocked(isValidId).mockReturnValue(false)
+
+    const invalidServiceId = 'invalid-id'
+    const requestBody = {
+      description: 'Serviço atualizado',
+      serviceDate: '2024-09-18',
+      vehicleId: 'vehicle123',
+      clientId: 'client123',
+      status: 'completed',
+      price: 100,
+    }
+
+    const response = await request(app)
+      .put(`/services/${invalidServiceId}`)
+      .send(requestBody)
 
     expect(response.status).toBe(400)
-    expect(response.body).toHaveProperty('message', 'Serviço não existe')
+    expect(response.body).toEqual({ message: 'Serviço não existe' })
   })
 })

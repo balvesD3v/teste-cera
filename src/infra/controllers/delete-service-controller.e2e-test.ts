@@ -1,5 +1,5 @@
 import request from 'supertest'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import app from '../app'
 import { ServiceModel } from '../models/service.model'
 
@@ -19,9 +19,13 @@ describe('DeleteServiceController', () => {
     serviceId = response.body.value.service._id.value
   })
 
-  afterAll(async () => {
+  beforeEach(async () => {
     await ServiceModel.deleteMany({})
 
+    await new Promise((resolve) => setTimeout(resolve, 500))
+  })
+
+  afterAll(async () => {
     await request(app).delete(`/api/services/${serviceId}`)
   })
 

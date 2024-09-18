@@ -7,14 +7,12 @@ import { ServiceModel } from '../models/service.model'
 
 describe('CreateServiceController E2E', () => {
   beforeAll(async () => {
-    // Conectar ao banco de dados de teste antes de rodar os testes
     await mongoose.connect(env.DATABASE_URL)
   })
 
   afterAll(async () => {
     await ServiceModel.deleteMany({})
 
-    // Desconectar do banco de dados após os testes
     await mongoose.disconnect()
   })
 
@@ -29,12 +27,29 @@ describe('CreateServiceController E2E', () => {
     })
 
     expect(response.status).toBe(201)
-    expect(response.body).toHaveProperty('value')
-    expect(response.body.value).toHaveProperty('service')
-    expect(response.body.value.service).toHaveProperty('props')
-    expect(response.body.value.service.props).toHaveProperty(
-      'description',
-      'Oil change',
+
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        value: expect.objectContaining({
+          service: expect.objectContaining({
+            _id: expect.objectContaining({
+              value: expect.any(String),
+            }),
+            props: expect.objectContaining({
+              description: 'Oil change',
+              clientId: expect.objectContaining({
+                value: 'cli-123',
+              }),
+              vehicleId: expect.objectContaining({
+                value: 'veh-123',
+              }),
+              price: 100,
+              serviceDate: expect.any(String),
+              status: 'pending',
+            }),
+          }),
+        }),
+      }),
     )
   })
 

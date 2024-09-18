@@ -47,9 +47,6 @@ describe('GetAllServiceController E2E', () => {
 
     const response = await request(app).get('/api/services')
 
-    console.log('Response Status:', response.status)
-    console.log('Response Body:', response.body)
-
     expect(response.status).toBe(200)
     expect(response.body).toHaveProperty('value')
     expect(response.body.value).toHaveProperty('services')
