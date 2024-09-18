@@ -12,7 +12,6 @@ describe('GetAllServiceController E2E', () => {
   })
 
   beforeEach(async () => {
-    // Clear the services collection before each test
     await ServiceModel.deleteMany({})
 
     await new Promise((resolve) => setTimeout(resolve, 500))
@@ -48,8 +47,8 @@ describe('GetAllServiceController E2E', () => {
 
     const response = await request(app).get('/api/services')
 
-    console.log('Response Status:', response.status) // Log response status
-    console.log('Response Body:', response.body) // Log response body
+    console.log('Response Status:', response.status)
+    console.log('Response Body:', response.body)
 
     expect(response.status).toBe(200)
     expect(response.body).toHaveProperty('value')
