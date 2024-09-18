@@ -50,7 +50,12 @@ describe('GetAllServiceController E2E', () => {
     expect(response.body).toHaveProperty('services')
     expect(response.body.services).toHaveLength(2)
 
-    const [service1, service2] = response.body.services
+    const sortedServices = response.body.services.sort(
+      (a: { description: string }, b: { description: string }) =>
+        a.description.localeCompare(b.description),
+    )
+
+    const [service1, service2] = sortedServices
 
     expect(service1).toEqual(
       expect.objectContaining({
