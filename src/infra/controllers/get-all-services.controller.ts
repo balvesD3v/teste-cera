@@ -11,6 +11,16 @@ export class GetAllServiceController {
       return res.status(400).json({ message: result.value.message })
     }
 
-    return res.status(200).json(result)
+    const services = result.value.services.map((service) => ({
+      id: service.id.toString(),
+      clientId: service.clientId.toValue(),
+      vehicleId: service.vehicleId.toValue(),
+      description: service.description,
+      price: service.price.toString(),
+      serviceDate: service.serviceDate,
+      status: service.status,
+    }))
+
+    return res.status(200).json({ services })
   }
 }

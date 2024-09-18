@@ -15,41 +15,28 @@ export class GetByIdServiceController {
       return res.status(400).json({ message: error.message })
     }
 
-    try {
-      const result = await this.getByIdServiceUseCase.execute({ serviceId: id })
+    const result = await this.getByIdServiceUseCase.execute({ serviceId: id })
 
-      if (result.isLeft()) {
-        const error = result.value
-        if (error instanceof ServiceNotFoundError) {
-          return res.status(404).json({ message: 'Serviço não encontrado' })
-        }
-        return res.status(400).json({ message: error.message })
+    if (result.isLeft()) {
+      const error = result.value
+      if (error instanceof ServiceNotFoundError) {
+        return res.status(404).json({ message: 'Serviço não encontrado' })
       }
-
-      const service = result.value.service
-
-      const response = {
-        _id: {
-          value: service.getId(), // Use getId() para obter o valor do _id
-        },
-        props: {
-          description: service.description,
-          clientId: {
-            value: service.clientId.toValue(), // Use toValue() para obter o valor do clientId
-          },
-          vehicleId: {
-            value: service.vehicleId.toValue(), // Use toValue() para obter o valor do vehicleId
-          },
-          price: service.price,
-          serviceDate: service.serviceDate.toISOString(), // Formatar a data como string ISO
-          status: service.status,
-        },
-      }
-
-      return res.status(200).json({ value: { service: response } })
-    } catch (error) {
-      // Adiciona tratamento para erros inesperados
-      return res.status(500).json({ message: 'Erro interno do servidor' })
+      return res.status(400).json({ message: error.message })
     }
+
+    const service = result.value.service
+
+    const response = {
+      id: service.getId().toString(),
+      clientId: service.clientId.toValue(),
+      vehicleId: service.vehicleId.toValue(),
+      description: service.description,
+      price: service.price.toString(),
+      serviceDate: service.serviceDate.toISOString(),
+      status: service.status,
+    }
+
+    return res.status(200).json(response)
   }
 }

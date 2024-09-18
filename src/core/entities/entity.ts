@@ -13,7 +13,7 @@ export abstract class Entity<Props> {
     return this._id.toValue()
   }
 
-  get id() {
+  get id(): UniqueEntityId {
     return this._id
   }
 

@@ -16,7 +16,10 @@ describe('DeleteServiceController', () => {
       price: 100,
     })
 
-    serviceId = response.body.value.service._id.value
+    // Verifica se a resposta contém o ID do serviço
+    expect(response.status).toBe(201)
+    expect(response.body).toHaveProperty('id')
+    serviceId = response.body.id
   })
 
   beforeEach(async () => {

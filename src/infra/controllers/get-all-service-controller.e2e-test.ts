@@ -13,7 +13,6 @@ describe('GetAllServiceController E2E', () => {
 
   beforeEach(async () => {
     await ServiceModel.deleteMany({})
-
     await new Promise((resolve) => setTimeout(resolve, 500))
   })
 
@@ -48,8 +47,33 @@ describe('GetAllServiceController E2E', () => {
     const response = await request(app).get('/api/services')
 
     expect(response.status).toBe(200)
-    expect(response.body).toHaveProperty('value')
-    expect(response.body.value).toHaveProperty('services')
-    expect(response.body.value.services).toHaveLength(2)
+    expect(response.body).toHaveProperty('services')
+    expect(response.body.services).toHaveLength(2)
+
+    const [service1, service2] = response.body.services
+
+    expect(service1).toEqual(
+      expect.objectContaining({
+        id: expect.any(String),
+        clientId: 'cli-123',
+        vehicleId: 'veh-123',
+        description: 'Oil change',
+        price: expect.any(String),
+        serviceDate: expect.any(String),
+        status: 'pending',
+      }),
+    )
+
+    expect(service2).toEqual(
+      expect.objectContaining({
+        id: expect.any(String),
+        clientId: 'cli-456',
+        vehicleId: 'veh-456',
+        description: 'Tire replacement',
+        price: expect.any(String),
+        serviceDate: expect.any(String),
+        status: 'completed',
+      }),
+    )
   })
 })

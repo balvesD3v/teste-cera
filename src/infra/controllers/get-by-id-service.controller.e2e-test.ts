@@ -25,7 +25,7 @@ describe('GetByIdServiceController', () => {
     return getByIdServiceController.handle(req, res)
   })
 
-  it('should retrive 200 and the data service when ID is valid', async () => {
+  it('should retrieve 200 and the service data when ID is valid', async () => {
     vi.mocked(isValidId).mockReturnValue(true)
 
     const serviceMock = {
@@ -34,7 +34,7 @@ describe('GetByIdServiceController', () => {
       clientId: { toValue: () => 'client123' },
       vehicleId: { toValue: () => 'vehicle123' },
       price: 100,
-      serviceDate: new Date(),
+      serviceDate: new Date('2024-01-01T10:00:00.000Z'),
       status: 'completed',
     }
 
@@ -49,23 +49,17 @@ describe('GetByIdServiceController', () => {
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual({
-      value: {
-        service: {
-          _id: { value: 'service123' },
-          props: {
-            description: 'Serviço de teste',
-            clientId: { value: 'client123' },
-            vehicleId: { value: 'vehicle123' },
-            price: 100,
-            serviceDate: serviceMock.serviceDate.toISOString(),
-            status: 'completed',
-          },
-        },
-      },
+      id: 'service123',
+      clientId: 'client123',
+      vehicleId: 'vehicle123',
+      description: 'Serviço de teste',
+      price: '100',
+      serviceDate: '2024-01-01T10:00:00.000Z',
+      status: 'completed',
     })
   })
 
-  it('should retrive 400 when id is invalid', async () => {
+  it('should retrieve 400 when ID is invalid', async () => {
     vi.mocked(isValidId).mockReturnValue(false)
 
     const response = await request(app).get('/services/invalid-id')
@@ -74,7 +68,7 @@ describe('GetByIdServiceController', () => {
     expect(response.body).toEqual({ message: 'ID inválido' })
   })
 
-  it('deve retornar 404 quando o serviço não for encontrado', async () => {
+  it('should retrieve 404 when the service is not found', async () => {
     vi.mocked(isValidId).mockReturnValue(true)
 
     const mockErrorResponse = {
@@ -88,19 +82,5 @@ describe('GetByIdServiceController', () => {
 
     expect(response.status).toBe(404)
     expect(response.body).toEqual({ message: 'Serviço não encontrado' })
-  })
-
-  it('deve retornar 500 quando ocorrer um erro inesperado', async () => {
-    vi.mocked(isValidId).mockReturnValue(true)
-
-    // Mockando um erro inesperado
-    getByIdServiceUseCaseMock.execute.mockRejectedValue(
-      new Error('Erro inesperado'),
-    )
-
-    const response = await request(app).get('/services/service123')
-
-    expect(response.status).toBe(500)
-    expect(response.body).toEqual({ message: 'Erro interno do servidor' })
   })
 })
