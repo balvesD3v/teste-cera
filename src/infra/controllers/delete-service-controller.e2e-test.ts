@@ -1,12 +1,12 @@
 import request from 'supertest'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import app from '../app'
+import { ServiceModel } from '../models/service.model'
 
 describe('DeleteServiceController', () => {
   let serviceId: string
 
   beforeAll(async () => {
-    // Setup: Adicione um serviço de teste no banco de dados
     const response = await request(app).post('/api/services').send({
       description: 'Test service',
       serviceDate: new Date().toISOString(),
@@ -16,11 +16,12 @@ describe('DeleteServiceController', () => {
       price: 100,
     })
 
-    serviceId = response.body.value.service._id.value // Pegue o ID do serviço criado
+    serviceId = response.body.value.service._id.value
   })
 
   afterAll(async () => {
-    // Cleanup: Opcional, exclua o serviço criado para manter o estado do banco limpo
+    await ServiceModel.deleteMany({})
+
     await request(app).delete(`/api/services/${serviceId}`)
   })
 

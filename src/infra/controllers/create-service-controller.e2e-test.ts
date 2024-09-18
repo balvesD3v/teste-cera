@@ -3,6 +3,7 @@ import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 import mongoose from 'mongoose'
 import app from '../app'
 import { env } from '../env/env'
+import { ServiceModel } from '../models/service.model'
 
 describe('CreateServiceController E2E', () => {
   beforeAll(async () => {
@@ -11,6 +12,8 @@ describe('CreateServiceController E2E', () => {
   })
 
   afterAll(async () => {
+    await ServiceModel.deleteMany({})
+
     // Desconectar do banco de dados após os testes
     await mongoose.disconnect()
   })
