@@ -1,21 +1,25 @@
 {
   "dependencies": {
+    "@types/supertest": "^6.0.2",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "mongoose": "^8.6.2",
+    "supertest": "^7.0.0",
     "zod": "^3.23.8"
   },
   "scripts": {
     "build": "tsc",
     "dev": "ts-node-dev --respawn --transpile-only src/infra/server.ts",
     "start": "node dist/infra/server.ts",
-    "test": "vitest"
+    "test": "vitest",
+    "test:e2e": "vitest run --config ./vite.config.e2e.ts",
+    "test:e2e:watch": "vitest --config ./vite.config.e2e.ts"
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.2.2",
     "@types/express": "^4.17.21",
     "@types/mongoose": "^5.11.97",
-    "@types/node": "^22.5.4",
+    "@types/node": "^22.5.5",
     "eslint": "^8.57.0",
     "mongodb-memory-server": "^10.0.0",
     "ts-node": "^10.9.2",
