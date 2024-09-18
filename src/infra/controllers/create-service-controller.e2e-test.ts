@@ -28,8 +28,6 @@ describe('CreateServiceController E2E', () => {
       price: 100,
     })
 
-    console.log(response.body)
-
     expect(response.status).toBe(201)
     expect(response.body).toHaveProperty('value')
     expect(response.body.value).toHaveProperty('service')

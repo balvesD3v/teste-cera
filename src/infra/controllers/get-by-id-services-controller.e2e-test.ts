@@ -9,21 +9,8 @@ import { UniqueEntityId } from 'src/core/entities/unique-entity-id'
 describe('GetAllServiceController E2E', () => {
   beforeAll(async () => {
     await mongoose.connect(env.DATABASE_URL)
-  })
 
-  beforeEach(async () => {
-    // Clear the services collection before each test
-    await ServiceModel.deleteMany({})
-
-    await new Promise((resolve) => setTimeout(resolve, 500))
-  })
-
-  afterAll(async () => {
-    await mongoose.disconnect()
-  })
-
-  it('should retrieve all services and return 200', async () => {
-    const services = await ServiceModel.create([
+    await ServiceModel.create([
       {
         _id: new UniqueEntityId(),
         description: 'Oil change',
@@ -43,17 +30,40 @@ describe('GetAllServiceController E2E', () => {
         price: 200,
       },
     ])
+  })
 
-    expect(services).toHaveLength(2)
+  beforeEach(async () => {
+    // Clear the services collection before each test
+    await ServiceModel.deleteMany({})
 
+    await new Promise((resolve) => setTimeout(resolve, 500))
+  })
+
+  afterAll(async () => {
+    await mongoose.disconnect() // Desconecta do banco de dados
+  })
+
+  it('should retrieve all services and return 200', async () => {
     const response = await request(app).get('/api/services')
 
-    console.log('Response Status:', response.status) // Log response status
-    console.log('Response Body:', response.body) // Log response body
+    console.log('Response Body:', response.body) // Adicione este log para inspecionar a resposta
 
+    // Verifique se a resposta tem o status 200
     expect(response.status).toBe(200)
+    // Verifique a estrutura da resposta com base no formato fornecido
     expect(response.body).toHaveProperty('value')
     expect(response.body.value).toHaveProperty('services')
-    expect(response.body.value.services).toHaveLength(2)
+    expect(response.body.value.services).toHaveLength(2) // Verifique se há exatamente dois serviços
+
+    const services = response.body.value.services
+
+    // Verifique os detalhes dos serviços retornados
+    expect(services[0]).toHaveProperty('_id')
+    expect(services[0]).toHaveProperty('props')
+    expect(services[0].props).toHaveProperty('description', 'Oil change')
+
+    expect(services[1]).toHaveProperty('_id')
+    expect(services[1]).toHaveProperty('props')
+    expect(services[1].props).toHaveProperty('description', 'Tire replacement')
   })
 })
