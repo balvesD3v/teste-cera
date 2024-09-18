@@ -9,19 +9,19 @@ export class GetByIdServiceController {
   async handle(req: Request, res: Response) {
     const { id } = req.params
 
-    if (!isValidId(id)) {
-      const error = new BadRequestException('Serviço não existe')
-      return res.status(400).json({ message: error.message })
-    }
+    // if (!isValidId(id)) {
+    //   const error = new BadRequestException('Serviço não existe')
+    //   return res.status(400).json({ message: error.message })
+    // }
 
     const result = await this.getByIdServiceUseCase.execute({
       serviceId: id,
     })
 
-    if (!result.isLeft()) {
-      return res.status(400).json({ message: result.value })
+    if (result.isLeft()) {
+      return res.status(400).json({ message: result.value.message })
     }
 
-    return res.status(200).json(result)
+    return res.status(200).json(result.value.service)
   }
 }

@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { CreateServiceUseCase } from './create-service.usecase'
-import { InMemoryServiceRepository } from '../../../../test/repositories/in-memory-service.repository'
 import { BadRequestException } from '../../../core/errors/errors/BadRequestException'
+import { InMemoryServiceRepository } from 'test/repositories/in-memory-service.repository'
 
 describe('CreateServiceUseCase', () => {
   let serviceRepository: InMemoryServiceRepository

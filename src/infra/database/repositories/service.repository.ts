@@ -5,12 +5,15 @@ import { ServiceMapper } from '../mappers/service.mapper'
 
 export class MongoServiceRepository implements ServiceRepository {
   async create(service: Service): Promise<void> {
-    const persitenceData = ServiceMapper.toService(service)
-    await ServiceModel.create(persitenceData)
+    const persistenceData = ServiceMapper.toService(service)
+    await ServiceModel.create({
+      ...persistenceData,
+      _id: service.id.toString(),
+    })
   }
 
   async delete(service: Service): Promise<void> {
-    await ServiceModel.findByIdAndDelete(service).exec()
+    await ServiceModel.findByIdAndDelete(service.id.toString()).exec()
   }
 
   async findAll(): Promise<Service[] | null> {

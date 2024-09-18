@@ -10,6 +10,10 @@ export interface IServiceModel extends Document {
 }
 
 const serviceSchema: Schema = new Schema({
+  _id: {
+    type: String,
+    required: true,
+  },
   description: {
     type: String,
     required: true,
