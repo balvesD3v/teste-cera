@@ -1,6 +1,9 @@
+# Ignora dependências locais e arquivos desnecessários
 node_modules
 npm-debug.log
-Dockerfile
-.dockerignore
+
+# Ignora arquivos sensíveis ou específicos do ambiente
 .env
+
+# Ignora a pasta de build local
 dist
