@@ -70,10 +70,6 @@ O projeto segue uma arquitetura modular e organizada, visando a separação de r
     docker-compose up -d
 5. O projeto vai está rodando na porta 3000
 
-6. Caso o dê problema na instalação das dependências execute:
-    ````
-    npm install
-
 ## Uso
 Após a instalação, você pode interagir com o sistema por meio de endpoints RESTful. Abaixo, estão as instruções para utilizar cada funcionalidade do sistema.
 
@@ -140,6 +136,10 @@ DELETE /api/services/:id
 
 ## Testes
 O projeto utiliza o Vitest como framework de testes, permitindo a execução de testes unitários e de integração.
+
+Caso o dê problema na instalação das dependências execute:
+    ````
+    npm install
 
 ### Para rodar os testes unitários execute o seguinte comado:
 ````
