@@ -1,52 +1,53 @@
+import { describe, it, expect, vi } from 'vitest'
 import request from 'supertest'
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
-import app from '../app'
-import { ServiceModel } from '../models/service.model'
+import express, { Request, Response } from 'express'
+import { DeleteServiceUseCase } from '../../domain/application/use-cases/delete-service.usecase'
+import { isValidId } from '../utils/id-validator'
+import { DeleteServiceController } from './delete-service.controller'
+
+vi.mock('../../domain/application/use-cases/delete-service.usecase')
+vi.mock('../utils/id-validator')
 
 describe('DeleteServiceController', () => {
-  let serviceId: string
+  const app = express()
+  app.use(express.json())
 
-  beforeAll(async () => {
-    const response = await request(app).post('/api/services').send({
-      description: 'Test service',
-      serviceDate: new Date().toISOString(),
-      vehicleId: 'veh-123',
-      clientId: 'cli-123',
-      status: 'pending',
-      price: 100,
-    })
+  const deleteServiceUseCaseMock = {
+    execute: vi.fn(),
+  }
 
-    // Verifica se a resposta contém o ID do serviço
-    expect(response.status).toBe(201)
-    expect(response.body).toHaveProperty('id')
-    serviceId = response.body.id
+  const deleteServiceController = new DeleteServiceController(
+    deleteServiceUseCaseMock as unknown as DeleteServiceUseCase,
+  )
+
+  app.delete('/services/:id', (req: Request, res: Response) => {
+    return deleteServiceController.handle(req, res)
   })
 
-  beforeEach(async () => {
-    await ServiceModel.deleteMany({})
+  it('should retrieve 200 when service is successfully deleted', async () => {
+    vi.mocked(isValidId).mockReturnValue(true)
 
-    await new Promise((resolve) => setTimeout(resolve, 500))
-  })
+    deleteServiceUseCaseMock.execute.mockResolvedValue({})
 
-  afterAll(async () => {
-    await request(app).delete(`/api/services/${serviceId}`)
-  })
+    const validServiceId = '123'
 
-  it('should delete a service and return 200', async () => {
-    const response = await request(app).delete(`/api/services/${serviceId}`)
+    const response = await request(app).delete(`/services/${validServiceId}`)
 
     expect(response.status).toBe(200)
-    expect(response.body).toHaveProperty(
-      'message',
-      'Serviço deletado com sucesso',
-    )
+    expect(response.body).toEqual({ message: 'Serviço deletado com sucesso' })
+    expect(deleteServiceUseCaseMock.execute).toHaveBeenCalledWith({
+      serviceId: validServiceId,
+    })
   })
 
-  it('should return 400 if the service ID is invalid', async () => {
-    const invalidId = 'invalid-id'
-    const response = await request(app).delete(`/api/services/${invalidId}`)
+  it('should retrieve 400 when service ID is invalid', async () => {
+    vi.mocked(isValidId).mockReturnValue(false)
+
+    const invalidServiceId = 'invalid-id'
+
+    const response = await request(app).delete(`/services/${invalidServiceId}`)
 
     expect(response.status).toBe(400)
-    expect(response.body).toHaveProperty('message', 'Serviço não existe')
+    expect(response.body).toEqual({ message: 'Serviço não existe' })
   })
 })

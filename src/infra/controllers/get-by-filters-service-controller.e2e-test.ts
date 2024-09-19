@@ -1,35 +1,82 @@
-import { Request, Response } from 'express'
-import { GetServicesByFiltersUseCase } from 'src/domain/application/use-cases/get-by-filters-service.usecase'
+import { describe, it, expect, vi } from 'vitest'
+import request from 'supertest'
+import express, { Request, Response } from 'express'
+import { GetServicesByFiltersUseCase } from '../../domain/application/use-cases/get-by-filters-service.usecase'
+import { GetServicesByFiltersController } from './get-by-filters-service.controller'
 
-export class GetServicesByFiltersController {
-  constructor(
-    private readonly getServicesByFiltersUseCase: GetServicesByFiltersUseCase,
-  ) {}
+vi.mock('../../domain/application/use-cases/get-by-filters-service.usecase')
 
-  async handle(req: Request, res: Response) {
-    const { clientId, vehicleId, status } = req.query
+describe('GetServicesByFiltersController', () => {
+  const app = express()
+  app.use(express.json())
 
-    const result = await this.getServicesByFiltersUseCase.execute({
-      clientId: clientId as string,
-      vehicleId: vehicleId as string,
-      status: status as string,
-    })
+  const getServicesByFiltersUseCaseMock = {
+    execute: vi.fn(),
+  }
 
-    if (result.isLeft()) {
-      const error = result.value
-      return res.status(400).json({ message: error.message })
+  const getServicesByFiltersController = new GetServicesByFiltersController(
+    getServicesByFiltersUseCaseMock as unknown as GetServicesByFiltersUseCase,
+  )
+
+  app.get('/services', (req: Request, res: Response) => {
+    return getServicesByFiltersController.handle(req, res)
+  })
+
+  it('should retrieve 200 and the list of services when filters are valid', async () => {
+    const servicesMock = [
+      {
+        getId: () => 'service123',
+        clientId: { toValue: () => 'client123' },
+        vehicleId: { toValue: () => 'vehicle123' },
+        description: 'Serviço de teste',
+        price: 100,
+        serviceDate: new Date('2024-01-01T10:00:00.000Z'),
+        status: 'completed',
+      },
+    ]
+
+    const mockResponse = {
+      isLeft: () => false,
+      value: { services: servicesMock },
     }
 
-    const services = result.value.services.map((service) => ({
-      id: service.getId().toString(),
-      clientId: service.clientId.toValue(),
-      vehicleId: service.vehicleId.toValue(),
-      description: service.description,
-      price: service.price.toString(),
-      serviceDate: service.serviceDate.toISOString(),
-      status: service.status,
-    }))
+    getServicesByFiltersUseCaseMock.execute.mockResolvedValue(mockResponse)
 
-    return res.status(200).json(services)
-  }
-}
+    const response = await request(app).get('/services').query({
+      clientId: 'client123',
+      vehicleId: 'vehicle123',
+      status: 'completed',
+    })
+
+    expect(response.status).toBe(200)
+    expect(response.body).toEqual([
+      {
+        id: 'service123',
+        clientId: 'client123',
+        vehicleId: 'vehicle123',
+        description: 'Serviço de teste',
+        price: '100',
+        serviceDate: '2024-01-01T10:00:00.000Z',
+        status: 'completed',
+      },
+    ])
+  })
+
+  it('should retrieve 400 when an error occurs in the use case', async () => {
+    const mockErrorResponse = {
+      isLeft: () => true,
+      value: new Error('Invalid filter data'),
+    }
+
+    getServicesByFiltersUseCaseMock.execute.mockResolvedValue(mockErrorResponse)
+
+    const response = await request(app).get('/services').query({
+      clientId: 'invalid-client',
+      vehicleId: 'invalid-vehicle',
+      status: 'completed',
+    })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ message: 'Invalid filter data' })
+  })
+})

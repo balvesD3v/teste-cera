@@ -1,84 +1,95 @@
+import { describe, it, expect, vi } from 'vitest'
 import request from 'supertest'
-import { describe, it, expect, beforeAll, afterAll, beforeEach } from 'vitest'
-import mongoose from 'mongoose'
-import { env } from '../env/env'
-import { ServiceModel } from '../models/service.model'
-import app from '../app'
-import { UniqueEntityId } from 'src/core/entities/unique-entity-id'
+import express, { Request, Response } from 'express'
+import { GetAllServiceUseCase } from '../../domain/application/use-cases/get-all-service.usecase'
+import { GetAllServiceController } from './get-all-services.controller'
 
-describe('GetAllServiceController E2E', () => {
-  beforeAll(async () => {
-    await mongoose.connect(env.DATABASE_URL)
+vi.mock('../../domain/application/use-cases/get-all-service.usecase')
+
+describe('GetAllServiceController', () => {
+  const app = express()
+  app.use(express.json())
+
+  const getAllServiceUseCaseMock = {
+    execute: vi.fn(),
+  }
+
+  const getAllServiceController = new GetAllServiceController(
+    getAllServiceUseCaseMock as unknown as GetAllServiceUseCase,
+  )
+
+  app.get('/services', (req: Request, res: Response) => {
+    return getAllServiceController.handle(req, res)
   })
 
-  beforeEach(async () => {
-    await ServiceModel.deleteMany({})
-    await new Promise((resolve) => setTimeout(resolve, 500))
-  })
-
-  afterAll(async () => {
-    await mongoose.disconnect()
-  })
-
-  it('should retrieve all services and return 200', async () => {
-    const services = await ServiceModel.create([
+  it('should retrieve 200 and return a list of services', async () => {
+    const mockServices = [
       {
-        _id: new UniqueEntityId(),
-        description: 'Oil change',
-        serviceDate: new Date().toISOString(),
-        vehicleId: 'veh-123',
-        clientId: 'cli-123',
-        status: 'pending',
+        id: 'service1',
+        clientId: { toValue: () => 'client1' },
+        vehicleId: { toValue: () => 'vehicle1' },
+        description: 'Serviço 1',
         price: 100,
+        serviceDate: '2024-09-18',
+        status: 'pending',
       },
       {
-        _id: new UniqueEntityId(),
-        description: 'Tire replacement',
-        serviceDate: new Date().toISOString(),
-        vehicleId: 'veh-456',
-        clientId: 'cli-456',
-        status: 'completed',
+        id: 'service2',
+        clientId: { toValue: () => 'client2' },
+        vehicleId: { toValue: () => 'vehicle2' },
+        description: 'Serviço 2',
         price: 200,
+        serviceDate: '2024-09-19',
+        status: 'completed',
       },
-    ])
+    ]
 
-    expect(services).toHaveLength(2)
+    const mockResponse = {
+      isLeft: () => false,
+      value: { services: mockServices },
+    }
 
-    const response = await request(app).get('/api/services')
+    getAllServiceUseCaseMock.execute.mockResolvedValue(mockResponse)
+
+    const response = await request(app).get('/services')
 
     expect(response.status).toBe(200)
-    expect(response.body).toHaveProperty('services')
-    expect(response.body.services).toHaveLength(2)
+    expect(response.body).toEqual({
+      services: [
+        {
+          id: 'service1',
+          clientId: 'client1',
+          vehicleId: 'vehicle1',
+          description: 'Serviço 1',
+          price: '100',
+          serviceDate: '2024-09-18',
+          status: 'pending',
+        },
+        {
+          id: 'service2',
+          clientId: 'client2',
+          vehicleId: 'vehicle2',
+          description: 'Serviço 2',
+          price: '200',
+          serviceDate: '2024-09-19',
+          status: 'completed',
+        },
+      ],
+    })
+    expect(getAllServiceUseCaseMock.execute).toHaveBeenCalled()
+  })
 
-    const sortedServices = response.body.services.sort(
-      (a: { description: string }, b: { description: string }) =>
-        a.description.localeCompare(b.description),
-    )
+  it('should retrieve 400 if there is an error in the use case', async () => {
+    const mockErrorResponse = {
+      isLeft: () => true,
+      value: new Error('Erro ao buscar serviços'),
+    }
 
-    const [service1, service2] = sortedServices
+    getAllServiceUseCaseMock.execute.mockResolvedValue(mockErrorResponse)
 
-    expect(service1).toEqual(
-      expect.objectContaining({
-        id: expect.any(String),
-        clientId: 'cli-123',
-        vehicleId: 'veh-123',
-        description: 'Oil change',
-        price: expect.any(String),
-        serviceDate: expect.any(String),
-        status: 'pending',
-      }),
-    )
+    const response = await request(app).get('/services')
 
-    expect(service2).toEqual(
-      expect.objectContaining({
-        id: expect.any(String),
-        clientId: 'cli-456',
-        vehicleId: 'veh-456',
-        description: 'Tire replacement',
-        price: expect.any(String),
-        serviceDate: expect.any(String),
-        status: 'completed',
-      }),
-    )
+    expect(response.status).toBe(400)
+    expect(response.body).toEqual({ message: 'Erro ao buscar serviços' })
   })
 })
