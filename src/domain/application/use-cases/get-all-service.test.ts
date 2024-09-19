@@ -20,7 +20,7 @@ describe('GetAllServiceUseCase', () => {
       serviceDate: new Date(),
       vehicleId: new UniqueEntityId('vehicle-uuid-1'),
       clientId: new UniqueEntityId('client-uuid-1'),
-      status: 'pending',
+      status: 'Pendente',
       price: 100,
     })
 
@@ -29,7 +29,7 @@ describe('GetAllServiceUseCase', () => {
       serviceDate: new Date(),
       vehicleId: new UniqueEntityId('vehicle-uuid-2'),
       clientId: new UniqueEntityId('client-uuid-2'),
-      status: 'completed',
+      status: 'Concluído',
       price: 200,
     })
 

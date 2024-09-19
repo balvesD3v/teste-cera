@@ -9,7 +9,7 @@ describe('Service Entity', () => {
       serviceDate: new Date('2024-01-01'),
       vehicleId: new UniqueEntityId(),
       clientId: new UniqueEntityId(),
-      status: 'pending' as const,
+      status: 'Pendente' as const,
       price: 100.0,
     }
 
@@ -30,7 +30,7 @@ describe('Service Entity', () => {
       serviceDate: new Date('2024-01-01'),
       vehicleId: new UniqueEntityId(),
       clientId: new UniqueEntityId(),
-      status: 'pending' as const,
+      status: 'Pendente' as const,
       price: 100.0,
     }
 
@@ -46,7 +46,7 @@ describe('Service Entity', () => {
       serviceDate: new Date('2024-01-01'),
       vehicleId: new UniqueEntityId(),
       clientId: new UniqueEntityId(),
-      status: 'pending' as const,
+      status: 'Pendente' as const,
       price: 100.0,
     }
 
@@ -63,7 +63,7 @@ describe('Service Entity', () => {
       serviceDate: new Date('2024-01-01'),
       vehicleId: new UniqueEntityId(),
       clientId: new UniqueEntityId(),
-      status: 'pending' as const,
+      status: 'Pendente' as const,
       price: 100.0,
     }
 
@@ -80,7 +80,7 @@ describe('Service Entity', () => {
       serviceDate: new Date('2024-01-01'),
       vehicleId: new UniqueEntityId(),
       clientId: new UniqueEntityId(),
-      status: 'pending' as const,
+      status: 'Pendente' as const,
       price: 100.0,
     }
 
@@ -97,14 +97,14 @@ describe('Service Entity', () => {
       serviceDate: new Date('2024-01-01'),
       vehicleId: new UniqueEntityId(),
       clientId: new UniqueEntityId(),
-      status: 'pending' as const,
+      status: 'Pendente' as const,
       price: 100.0,
     }
 
     const service = Service.create(serviceProps)
-    service.updateStatus('completed')
+    service.updateStatus('Concluído')
 
-    expect(service.status).toBe('completed')
+    expect(service.status).toBe('Concluído')
   })
 
   it('should update the price of the service', () => {
@@ -113,7 +113,7 @@ describe('Service Entity', () => {
       serviceDate: new Date('2024-01-01'),
       vehicleId: new UniqueEntityId(),
       clientId: new UniqueEntityId(),
-      status: 'pending' as const,
+      status: 'Pendente' as const,
       price: 100.0,
     }
 

@@ -39,7 +39,7 @@ describe('GetServicesByFiltersUseCase', () => {
       serviceDate: new Date(),
       vehicleId: new UniqueEntityId(),
       clientId: new UniqueEntityId(),
-      status: 'completed',
+      status: 'Concluído',
       price: 100,
     })
 
@@ -48,7 +48,7 @@ describe('GetServicesByFiltersUseCase', () => {
       serviceDate: new Date(),
       vehicleId: new UniqueEntityId(),
       clientId: new UniqueEntityId(),
-      status: 'pending',
+      status: 'Pendente',
       price: 200,
     })
 

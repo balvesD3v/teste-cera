@@ -20,7 +20,7 @@ describe('DeleteServiceUseCase', () => {
       serviceDate: new Date(),
       vehicleId: new UniqueEntityId('vehicle-uuid'),
       clientId: new UniqueEntityId('client-uuid'),
-      status: 'pending',
+      status: 'Pendente',
       price: 100,
     })
 

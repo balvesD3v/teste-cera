@@ -20,7 +20,7 @@ describe('GetByIdServiceUseCase', () => {
       serviceDate: new Date(),
       vehicleId: new UniqueEntityId(),
       clientId: new UniqueEntityId(),
-      status: 'pending',
+      status: 'Pendente',
       price: 100,
     })
     await inMemoryServiceRepository.create(service)

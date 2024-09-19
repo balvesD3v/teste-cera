@@ -19,7 +19,7 @@ describe('UpdateServiceUseCase', () => {
       serviceDate: new Date(),
       vehicleId: new UniqueEntityId('vehicle-123'),
       clientId: new UniqueEntityId('client-123'),
-      status: 'pending',
+      status: 'Pendente',
       price: 100,
     })
 
@@ -32,7 +32,7 @@ describe('UpdateServiceUseCase', () => {
       serviceDate: new Date(),
       vehicleId: new UniqueEntityId('vehicle-456'),
       clientId: new UniqueEntityId('client-456'),
-      status: 'completed' as const,
+      status: 'Concluído' as const,
       price: 150,
     }
 
@@ -54,7 +54,7 @@ describe('UpdateServiceUseCase', () => {
       serviceDate: new Date(),
       vehicleId: new UniqueEntityId('vehicle-456'),
       clientId: new UniqueEntityId('client-456'),
-      status: 'completed' as const,
+      status: 'Concluído' as const,
       price: 150,
     }
 
