@@ -59,7 +59,7 @@ O projeto segue uma arquitetura modular e organizada, visando a separação de r
     cd teste-cera
     ````
 3. Defina a varíavel de ambienta DATABASE_URL
-    ````
+    ```bash
     Crie um .env seguindo o .env.example
 
     DATABASE_URL=mongodb://seu_banco:27017/nome_da_base_de_dados
@@ -101,7 +101,7 @@ POST /api/services
 ````
 PUT /api/services/:id
 ````
-![Descrição do GIF](https://raw.githubusercontent.com/balvesD3v/assets-food-explorer/refs/heads/main/assets/HTTPie%202024-09-19%2017-34-05.gif?token=GHSAT0AAAAAACWQPWBDUZE34XQPD27WRYTAZXMTIVA)
+![Descrição do GIF](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzN1OHFjMTdocnFuZjl1N3V4eXZsdngxODFkZ3E0Ym41ZTUxYzVlaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3cA94ttA9Ufkjb2F8W/giphy.gif)
 
 Campos Atualizáveis
 Você pode atualizar qualquer campo do serviço, exceto o ID.
@@ -128,19 +128,20 @@ Por ID do Cliente ou VehicleID ou Status (utilize query aqui)
 GET /api/servicesfiltered
 ````
 ![Descrição do GIF](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHJ0NnJtM3ZpNHFod3phNmw3NGxseHB1dGxwaTl0NjhtZGF6Z2docCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/rvUBstf4rS6AKnHUJT/giphy.webp)
-Parâmetros de Consulta
-Você pode usar os seguintes parâmetros de consulta para filtrar os serviços retornados:
 
-clientId: Filtra os serviços pelo ID do cliente.
-vehicleId: Filtra os serviços pelo ID do veículo.
-status: Filtra os serviços pelo status (Pendente, Em Andamento, Concluído).
+- Parâmetros de Consulta
+- Você pode usar os seguintes parâmetros de consulta para filtrar os serviços retornados:
+
+    - clientId: Filtra os serviços pelo ID do cliente.
+    - vehicleId: Filtra os serviços pelo ID do veículo.
+    - status: Filtra os serviços pelo status (Pendente, Em Andamento, Concluído).
 
 ### Exclusão de Serviços
 #### Para excluir um serviço pelo ID, envie um DELETE para o seguinte endpoint:
 ````
 DELETE /api/services/:id
 ````
-![Descrição do GIF](https://raw.githubusercontent.com/balvesD3v/assets-food-explorer/refs/heads/main/assets/HTTPie%202024-09-19%2018-07-22.gif?token=GHSAT0AAAAAACWQPWBDHPL5JGFOS5AIMHIYZXMTKGQ)
+![Descrição do GIF](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWZqcjJtZWI4N25rNndzMW04cTB6Znl3OTd6djR3Z3BjYjhqajl5ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/gLV7bVKzXqZmwbp7RH/giphy.gif)
 
 ## Testes
 O projeto utiliza o Vitest como framework de testes, permitindo a execução de testes unitários e de integração.
