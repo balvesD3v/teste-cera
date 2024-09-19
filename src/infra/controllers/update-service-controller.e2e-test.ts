@@ -65,7 +65,7 @@ describe('UpdateServiceController', () => {
       clientId: 'client123',
       vehicleId: 'vehicle123',
       description: 'Serviço atualizado',
-      price: '100',
+      price: 100,
       serviceDate: '2024-09-18',
       status: 'completed',
     })
