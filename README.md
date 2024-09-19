@@ -63,11 +63,19 @@ O projeto segue uma arquitetura modular e organizada, visando a separação de r
     renomeie o .env.example para .env e defina a variável de ambiente
 
     DATABASE_URL=mongodb://seu_banco:27017/nome_da_base_de_dados
-
     ````
-4. Utilize o docker para iniciar o projeto
-    `````
-    docker-compose up -d
+4. Instale as dependências
+    ````
+    npm install
+    ````
+5. Execute o build do typescript
+    ````
+    npm run build
+    ````
+6. Inicie a aplicação com 
+    ````
+    npm run dev
+    ````    
 5. O projeto vai está rodando na porta 3000
 
 ## Uso
@@ -78,7 +86,7 @@ Após a instalação, você pode interagir com o sistema por meio de endpoints R
 ````
 POST /api/services
 ````
-![Descrição do GIF](https://raw.githubusercontent.com/balvesD3v/assets-food-explorer/refs/heads/main/assets/HTTPie%202024-09-19%2016-35-33.gif?token=GHSAT0AAAAAACWQPWBCDZGUF7TQ4ZOW7J6UZXMTIEA)
+![Descrição do GIF](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWFsZXZ1aHdqOWdpOTAxOWplZjZyZjFneDVjdXIwajFsdm44MDRyeiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/dfeXfSS9RUsuzz7Jyl/giphy.webp)
 
 - Campos Obrigatórios
     - descricao: Descrição do serviço.
@@ -105,13 +113,13 @@ Listar Todos os Serviços
 ````
 GET /api/services
 ````
-![Descrição do GIF](https://raw.githubusercontent.com/balvesD3v/assets-food-explorer/refs/heads/main/assets/HTTPie%202024-09-19%2017-40-30.gif?token=GHSAT0AAAAAACWQPWBDSPP7PISABH7E2JN6ZXMTJCQ)
+![Descrição do GIF](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWRkNzN0cGg0ZWxwbHdudzd2N3JuNmR1bHJsbnppM3VtaWlpNm5rdyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/FBKvxc0p7rphamK5XF/giphy.webp)
 
 Por ID do Serviço
 ````
 GET /api/services/:id
 ````
-![Descrição do GIF](https://raw.githubusercontent.com/balvesD3v/assets-food-explorer/refs/heads/main/assets/HTTPie%202024-09-19%2017-44-04.gif?token=GHSAT0AAAAAACWQPWBCHXF3ZY5FOHOTHWUOZXMTJSQ)
+![Descrição do GIF](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExaGE5YXh2aHIwaTFpMjIxc2xnZHB0Nml4dzg0a2Zya2M3a2o3NnZ4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0D2ro8Pq9DahyKgDk2/giphy.webp)
 
 ### Consulta de Serviços Filtrados
 #### Para consultar serviços de forma filtrada, você pode utilizar o seguinte endpoint:
@@ -119,7 +127,7 @@ Por ID do Cliente ou VehicleID ou Status (utilize query aqui)
 ````
 GET /api/servicesfiltered
 ````
-![Descrição do GIF](https://raw.githubusercontent.com/balvesD3v/assets-food-explorer/refs/heads/main/assets/HTTPie%202024-09-19%2017-48-03.gif?token=GHSAT0AAAAAACWQPWBC3PF3QSU5T3VMIFUKZXMTJ6A)
+![Descrição do GIF](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHJ0NnJtM3ZpNHFod3phNmw3NGxseHB1dGxwaTl0NjhtZGF6Z2docCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/rvUBstf4rS6AKnHUJT/giphy.webp)
 Parâmetros de Consulta
 Você pode usar os seguintes parâmetros de consulta para filtrar os serviços retornados:
 
