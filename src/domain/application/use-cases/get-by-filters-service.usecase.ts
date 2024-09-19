@@ -37,7 +37,7 @@ export class GetServicesByFiltersUseCase {
       status,
     })
 
-    if (!services) {
+    if (!services || services.length === 0) {
       return left(new ServiceNotFoundError())
     }
 

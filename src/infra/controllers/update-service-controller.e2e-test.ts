@@ -5,7 +5,6 @@ import { UpdateServiceUseCase } from '../../domain/application/use-cases/update-
 import { isValidId } from '../utils/id-validator'
 import { UpdateServiceController } from './update-service.controller'
 
-// Mockando o updateServiceUseCase e a função isValidId
 vi.mock('../../domain/application/use-cases/update-service.usecase')
 vi.mock('../utils/id-validator')
 
@@ -21,16 +20,13 @@ describe('UpdateServiceController', () => {
     updateServiceUseCaseMock as unknown as UpdateServiceUseCase,
   )
 
-  // Definindo uma rota para o teste e2e
   app.put('/services/:id', (req: Request, res: Response) => {
     return updateServiceController.handle(req, res)
   })
 
   it('should retrive 200 when request is valid', async () => {
-    // Mockando a validação de ID
     vi.mocked(isValidId).mockReturnValue(true)
 
-    // Mockando a execução do use case
     const mockResponse = { success: true }
     updateServiceUseCaseMock.execute.mockResolvedValue(mockResponse)
 
@@ -44,12 +40,10 @@ describe('UpdateServiceController', () => {
       price: 100,
     }
 
-    // Simulando a requisição HTTP
     const response = await request(app)
       .put(`/services/${validServiceId}`)
       .send(requestBody)
 
-    // Verificando se o status é 200 e a resposta está correta
     expect(response.status).toBe(200)
     expect(response.body).toEqual(mockResponse)
     expect(updateServiceUseCaseMock.execute).toHaveBeenCalledWith({
@@ -59,7 +53,6 @@ describe('UpdateServiceController', () => {
   })
 
   it('should retrive 400 when ID is invalid', async () => {
-    // Mockando a validação de ID como inválida
     vi.mocked(isValidId).mockReturnValue(false)
 
     const invalidServiceId = 'invalid-id'

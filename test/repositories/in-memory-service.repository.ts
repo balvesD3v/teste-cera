@@ -31,4 +31,26 @@ export class InMemoryServiceRepository implements ServiceRepository {
 
     return service
   }
+
+  async findByFilters(filters: {
+    clientId?: string
+    vehicleId?: string
+    status?: string
+  }): Promise<Service[] | null> {
+    const { clientId, vehicleId, status } = filters
+
+    const filteredServices = this.items.filter((service) => {
+      const matchesClientId = clientId
+        ? service.clientId.toString() === clientId
+        : true
+      const matchesVehicleId = vehicleId
+        ? service.vehicleId.toString() === vehicleId
+        : true
+      const matchesStatus = status ? service.status === status : true
+
+      return matchesClientId && matchesVehicleId && matchesStatus
+    })
+
+    return filteredServices
+  }
 }

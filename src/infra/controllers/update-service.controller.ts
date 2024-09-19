@@ -28,6 +28,20 @@ export class UpdateServiceController {
 
     const result = await this.updateServiceUseCase.execute(updateServiceRequest)
 
-    return res.status(200).json(result)
+    if (result.isLeft()) {
+      return res.status(400).json({ message: result.value.message })
+    }
+
+    const service = result.value.service
+
+    return res.status(200).json({
+      id: service.id.toString(),
+      clientId: service.clientId.toString(),
+      vehicleId: service.vehicleId.toString(),
+      description: service.description.toString(),
+      price: service.price.toString(),
+      serviceDate: service.serviceDate,
+      status: service.status,
+    })
   }
 }

@@ -21,14 +21,16 @@ export class CreateServiceController {
       return res.status(400).json({ message: result.value.message })
     }
 
+    const service = result.value.service
+
     return res.status(201).json({
-      id: result.value.service.id.toString(),
-      clientId: result.value.service.clientId.toValue(),
-      vehicleId: result.value.service.vehicleId.toValue(),
-      description: result.value.service.description.toString(),
-      price: result.value.service.price.toString(),
-      serviceDate: result.value.service.serviceDate,
-      status: result.value.service.status,
+      id: service.id.toString(),
+      clientId: service.clientId.toValue(),
+      vehicleId: service.vehicleId.toValue(),
+      description: service.description.toString(),
+      price: service.price.toString(),
+      serviceDate: service.serviceDate,
+      status: service.status,
     })
   }
 }
