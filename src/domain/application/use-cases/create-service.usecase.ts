@@ -9,7 +9,7 @@ interface CreateServiceUseCaseRequest {
   serviceDate: Date
   vehicleId: string
   clientId: string
-  status: 'pending' | 'completed' | 'canceled'
+  status: 'Pendente' | 'Em Andamento' | 'Concluído'
   price: number
 }
 

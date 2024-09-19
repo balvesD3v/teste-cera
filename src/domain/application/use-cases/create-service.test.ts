@@ -18,7 +18,7 @@ describe('CreateServiceUseCase', () => {
       serviceDate: new Date(),
       vehicleId: 'vehicle-uuid',
       clientId: 'client-uuid',
-      status: 'pending' as const,
+      status: 'Pendente' as const,
       price: 100,
     }
 
@@ -43,7 +43,7 @@ describe('CreateServiceUseCase', () => {
       serviceDate: new Date(),
       vehicleId: 'vehicle-uuid',
       clientId: 'client-uuid',
-      status: 'pending' as const,
+      status: 'Pendente' as const,
       price: 100,
     }
 
@@ -64,7 +64,7 @@ describe('CreateServiceUseCase', () => {
       serviceDate: new Date(),
       vehicleId: 'vehicle-uuid',
       clientId: 'client-uuid',
-      status: 'pending' as const,
+      status: 'Pendente' as const,
       price: 0, // invalid price
     }
 
