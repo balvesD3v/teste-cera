@@ -20,7 +20,7 @@ describe('Service Entity', () => {
     expect(service.serviceDate).toEqual(new Date('2024-01-01'))
     expect(service.vehicleId).toBeInstanceOf(UniqueEntityId)
     expect(service.clientId).toBeInstanceOf(UniqueEntityId)
-    expect(service.status).toBe('pending')
+    expect(service.status).toBe('Pendente')
     expect(service.price).toBe(100.0)
   })
 

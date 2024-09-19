@@ -43,7 +43,7 @@ describe('UpdateServiceUseCase', () => {
       const updatedService = response.value.service
       expect(updatedService.description).toBe(updatedDescription)
       expect(updatedService.price).toBe(150)
-      expect(updatedService.status).toBe('completed')
+      expect(updatedService.status).toBe('Concluído')
     }
   })
 
