@@ -60,7 +60,7 @@ O projeto segue uma arquitetura modular e organizada, visando a separação de r
     ````
 3. Defina a varíavel de ambienta DATABASE_URL
     ````
-    renomeie o .env.example para .env e defina a variável de ambiente
+    Crie um .env seguindo o .env.example
 
     DATABASE_URL=mongodb://seu_banco:27017/nome_da_base_de_dados
     ````
@@ -144,11 +144,6 @@ DELETE /api/services/:id
 
 ## Testes
 O projeto utiliza o Vitest como framework de testes, permitindo a execução de testes unitários e de integração.
-
-Caso o dê problema na instalação das dependências execute:
-````
-npm install
-````
 
 ### Para rodar os testes unitários execute o seguinte comado:
 ````
