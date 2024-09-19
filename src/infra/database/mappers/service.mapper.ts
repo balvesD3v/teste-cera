@@ -22,8 +22,8 @@ export class ServiceMapper {
       id: service.id.toString(),
       description: service.description,
       serviceDate: service.serviceDate,
-      vehicleId: service.vehicleId.toValue(),
-      clientId: service.clientId.toValue(),
+      vehicleId: service.vehicleId.toString(),
+      clientId: service.clientId.toString(),
       status: service.status,
       price: service.price,
     }
