@@ -138,8 +138,9 @@ DELETE /api/services/:id
 O projeto utiliza o Vitest como framework de testes, permitindo a execução de testes unitários e de integração.
 
 Caso o dê problema na instalação das dependências execute:
-    ````
-    npm install
+````
+npm install
+````
 
 ### Para rodar os testes unitários execute o seguinte comado:
 ````
