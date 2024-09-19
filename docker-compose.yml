@@ -9,4 +9,4 @@ services:
       - "3000:3000"
     env_file:
       - .env
-    command: npm run start
+    command: npm run start:docker
