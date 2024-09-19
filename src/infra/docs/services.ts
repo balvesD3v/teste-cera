@@ -55,15 +55,21 @@ export const servicesPaths = {
         },
       },
       responses: {
-        201: { description: 'Serviço criado com sucesso' },
-        400: { description: 'Erro na validação dos dados fornecidos' },
+        '201': {
+          description: 'Serviço criado com sucesso',
+        },
+        '400': {
+          description: 'Erro na validação dos dados fornecidos',
+        },
       },
     },
     get: {
       summary: 'Retorna todos os serviços',
       tags: ['Serviços'],
       responses: {
-        200: { description: 'Lista de serviços' },
+        '200': {
+          description: 'Lista de serviços',
+        },
       },
     },
   },
@@ -77,12 +83,18 @@ export const servicesPaths = {
           name: 'id',
           required: true,
           description: 'ID do serviço',
-          schema: { type: 'string' },
+          schema: {
+            type: 'string',
+          },
         },
       ],
       responses: {
-        200: { description: 'Serviço retornado com sucesso' },
-        404: { description: 'Serviço não encontrado' },
+        '200': {
+          description: 'Serviço retornado com sucesso',
+        },
+        '404': {
+          description: 'Serviço não encontrado',
+        },
       },
     },
     delete: {
@@ -94,12 +106,18 @@ export const servicesPaths = {
           name: 'id',
           required: true,
           description: 'ID do serviço',
-          schema: { type: 'string' },
+          schema: {
+            type: 'string',
+          },
         },
       ],
       responses: {
-        200: { description: 'Serviço excluído com sucesso' },
-        404: { description: 'Serviço não encontrado' },
+        '200': {
+          description: 'Serviço excluído com sucesso',
+        },
+        '404': {
+          description: 'Serviço não encontrado',
+        },
       },
     },
     put: {
@@ -111,7 +129,9 @@ export const servicesPaths = {
           name: 'id',
           required: true,
           description: 'ID do serviço',
-          schema: { type: 'string' },
+          schema: {
+            type: 'string',
+          },
         },
       ],
       requestBody: {
@@ -152,8 +172,114 @@ export const servicesPaths = {
         },
       },
       responses: {
-        200: { description: 'Serviço atualizado com sucesso' },
-        404: { description: 'Serviço não encontrado' },
+        '200': {
+          description: 'Serviço atualizado com sucesso',
+        },
+        '404': {
+          description: 'Serviço não encontrado',
+        },
+      },
+    },
+  },
+  '/servicesfiltered': {
+    get: {
+      summary:
+        'Retorna uma lista de serviços filtrados com base nos parâmetros fornecidos.',
+      tags: ['Serviços'],
+      parameters: [
+        {
+          name: 'clientId',
+          in: 'query',
+          description: 'ID do cliente para filtrar os serviços.',
+          required: false,
+          schema: {
+            type: 'string',
+            example: '0987654321',
+          },
+        },
+        {
+          name: 'vehicleId',
+          in: 'query',
+          description: 'ID do veículo para filtrar os serviços.',
+          required: false,
+          schema: {
+            type: 'string',
+            example: '1234567890',
+          },
+        },
+        {
+          name: 'status',
+          in: 'query',
+          description:
+            "Status do serviço para filtrar. Pode ser 'pendente', 'em andamento' ou 'concluído'.",
+          required: false,
+          schema: {
+            type: 'string',
+            example: 'pendente',
+          },
+        },
+      ],
+      responses: {
+        '200': {
+          description: 'Lista de serviços filtrados com sucesso.',
+          content: {
+            'application/json': {
+              schema: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    id: {
+                      type: 'string',
+                      description: 'ID do serviço',
+                    },
+                    description: {
+                      type: 'string',
+                      description: 'Descrição do serviço',
+                    },
+                    serviceDate: {
+                      type: 'string',
+                      format: 'date-time',
+                      description: 'Data do serviço',
+                    },
+                    vehicleId: {
+                      type: 'string',
+                      description: 'ID do veículo',
+                    },
+                    clientId: {
+                      type: 'string',
+                      description: 'ID do cliente',
+                    },
+                    status: {
+                      type: 'string',
+                      description: 'Status do serviço',
+                    },
+                    price: {
+                      type: 'number',
+                      description: 'Preço do serviço',
+                    },
+                  },
+                  example: {
+                    id: '1',
+                    description: 'Troca de óleo',
+                    serviceDate: '2023-09-18T10:00:00Z',
+                    vehicleId: '1234567890',
+                    clientId: '0987654321',
+                    status: 'pendente',
+                    price: 260.0,
+                  },
+                },
+              },
+            },
+          },
+        },
+        '400': {
+          description:
+            'Erro na validação dos parâmetros de consulta fornecidos.',
+        },
+        '500': {
+          description: 'Erro inesperado no servidor.',
+        },
       },
     },
   },
