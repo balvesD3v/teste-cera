@@ -35,7 +35,7 @@ describe('UpdateServiceController', () => {
       description: 'Serviço atualizado',
       price: 100,
       serviceDate: '2024-09-18',
-      status: 'completed',
+      status: 'Concluído',
     }
 
     const mockResponse = {
@@ -51,7 +51,7 @@ describe('UpdateServiceController', () => {
       serviceDate: '2024-09-18',
       vehicleId: 'vehicle123',
       clientId: 'client123',
-      status: 'completed',
+      status: 'Concluído',
       price: 100,
     }
 
@@ -67,7 +67,7 @@ describe('UpdateServiceController', () => {
       description: 'Serviço atualizado',
       price: 100,
       serviceDate: '2024-09-18',
-      status: 'completed',
+      status: 'Concluído',
     })
 
     expect(updateServiceUseCaseMock.execute).toHaveBeenCalledWith({
@@ -85,7 +85,7 @@ describe('UpdateServiceController', () => {
       serviceDate: '2024-09-18',
       vehicleId: 'vehicle123',
       clientId: 'client123',
-      status: 'completed',
+      status: 'Concluído',
       price: 100,
     }
 
@@ -106,7 +106,7 @@ describe('UpdateServiceController', () => {
       serviceDate: '2024-09-18',
       vehicleId: 'vehicle123',
       clientId: 'client123',
-      status: 'completed',
+      status: 'Concluído',
       price: 100,
     }
 

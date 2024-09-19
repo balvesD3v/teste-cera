@@ -30,7 +30,7 @@ describe('CreateServiceController', () => {
       description: 'Novo serviço',
       price: 100,
       serviceDate: '2024-09-18',
-      status: 'pending',
+      status: 'Pendente',
     }
 
     const mockResponse = {
@@ -45,7 +45,7 @@ describe('CreateServiceController', () => {
       serviceDate: '2024-09-18',
       vehicleId: 'vehicle123',
       clientId: 'client123',
-      status: 'pending',
+      status: 'Pendente',
       price: 100,
     }
 
@@ -59,7 +59,7 @@ describe('CreateServiceController', () => {
       description: 'Novo serviço',
       price: '100',
       serviceDate: '2024-09-18',
-      status: 'pending',
+      status: 'Pendente',
     })
 
     expect(createServiceUseCaseMock.execute).toHaveBeenCalledWith(requestBody)
@@ -78,7 +78,7 @@ describe('CreateServiceController', () => {
       serviceDate: '2024-09-18',
       vehicleId: 'vehicle123',
       clientId: 'client123',
-      status: 'pending',
+      status: 'Pendente',
       price: 100,
     }
 

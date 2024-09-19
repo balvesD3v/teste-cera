@@ -5,7 +5,7 @@ export interface IServiceModel extends Document {
   serviceDate: Date
   vehicleId: string
   clientId: string
-  status: 'pending' | 'completed' | 'canceled'
+  status: 'Pendente' | 'Em Andamento' | 'Concluído'
   price: number
 }
 
@@ -32,7 +32,7 @@ const serviceSchema: Schema = new Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'completed', 'canceled'],
+    enum: ['Pendente', 'Em Andamento', 'Concluído'],
   },
   price: {
     type: Number,

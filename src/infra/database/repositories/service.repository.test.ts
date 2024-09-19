@@ -30,7 +30,7 @@ describe('MongoServiceRepository', () => {
       serviceDate: new Date(),
       vehicleId: new UniqueEntityId('vehicle-123'),
       clientId: new UniqueEntityId('client-123'),
-      status: 'pending',
+      status: 'Pendente',
       price: 100,
     })
 
@@ -50,7 +50,7 @@ describe('MongoServiceRepository', () => {
       serviceDate: new Date(),
       vehicleId: new UniqueEntityId('vehicle-123'),
       clientId: new UniqueEntityId('client-123'),
-      status: 'pending',
+      status: 'Pendente',
       price: 100,
     })
 
@@ -76,7 +76,7 @@ describe('MongoServiceRepository', () => {
       serviceDate: new Date(),
       vehicleId: new UniqueEntityId('vehicle-123'),
       clientId: new UniqueEntityId('client-123'),
-      status: 'pending',
+      status: 'Pendente',
       price: 100,
     })
 
@@ -97,7 +97,7 @@ describe('MongoServiceRepository', () => {
       serviceDate: new Date(),
       vehicleId: new UniqueEntityId('vehicle-123'),
       clientId: new UniqueEntityId('client-123'),
-      status: 'pending',
+      status: 'Pendente',
       price: 100,
     })
 
@@ -106,7 +106,7 @@ describe('MongoServiceRepository', () => {
       serviceDate: new Date(),
       vehicleId: new UniqueEntityId('vehicle-456'),
       clientId: new UniqueEntityId('client-456'),
-      status: 'completed',
+      status: 'Concluído',
       price: 200,
     })
 

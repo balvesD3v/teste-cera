@@ -31,7 +31,7 @@ describe('GetAllServiceController', () => {
         description: 'Serviço 1',
         price: 100,
         serviceDate: '2024-09-18',
-        status: 'pending',
+        status: 'Pendente',
       },
       {
         id: 'service2',
@@ -40,7 +40,7 @@ describe('GetAllServiceController', () => {
         description: 'Serviço 2',
         price: 200,
         serviceDate: '2024-09-19',
-        status: 'completed',
+        status: 'Concluído',
       },
     ]
 
@@ -63,7 +63,7 @@ describe('GetAllServiceController', () => {
           description: 'Serviço 1',
           price: '100',
           serviceDate: '2024-09-18',
-          status: 'pending',
+          status: 'Pendente',
         },
         {
           id: 'service2',
@@ -72,7 +72,7 @@ describe('GetAllServiceController', () => {
           description: 'Serviço 2',
           price: '200',
           serviceDate: '2024-09-19',
-          status: 'completed',
+          status: 'Concluído',
         },
       ],
     })

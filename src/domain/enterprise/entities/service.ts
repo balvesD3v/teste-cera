@@ -6,7 +6,7 @@ interface ServiceProps {
   serviceDate: Date
   vehicleId: UniqueEntityId
   clientId: UniqueEntityId
-  status: 'pending' | 'completed' | 'canceled'
+  status: 'Pendente' | 'Em Andamento' | 'Concluído'
   price: number
 }
 
@@ -51,7 +51,7 @@ export class Service extends Entity<ServiceProps> {
     this.props.clientId = clientId
   }
 
-  updateStatus(status: 'pending' | 'completed' | 'canceled') {
+  updateStatus(status: 'Pendente' | 'Em Andamento' | 'Concluído') {
     this.props.status = status
   }
 

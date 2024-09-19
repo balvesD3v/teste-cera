@@ -31,7 +31,7 @@ describe('GetServicesByFiltersController', () => {
         description: 'Serviço de teste',
         price: 100,
         serviceDate: new Date('2024-01-01T10:00:00.000Z'),
-        status: 'completed',
+        status: 'Concluído',
       },
     ]
 
@@ -45,7 +45,7 @@ describe('GetServicesByFiltersController', () => {
     const response = await request(app).get('/services').query({
       clientId: 'client123',
       vehicleId: 'vehicle123',
-      status: 'completed',
+      status: 'Concluído',
     })
 
     expect(response.status).toBe(200)
@@ -57,7 +57,7 @@ describe('GetServicesByFiltersController', () => {
         description: 'Serviço de teste',
         price: '100',
         serviceDate: '2024-01-01T10:00:00.000Z',
-        status: 'completed',
+        status: 'Concluído',
       },
     ])
   })
@@ -73,7 +73,7 @@ describe('GetServicesByFiltersController', () => {
     const response = await request(app).get('/services').query({
       clientId: 'invalid-client',
       vehicleId: 'invalid-vehicle',
-      status: 'completed',
+      status: 'Concluído',
     })
 
     expect(response.status).toBe(400)

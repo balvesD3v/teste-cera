@@ -11,7 +11,7 @@ interface UpdateServiceUseCaseRequest {
   serviceDate: Date
   vehicleId: UniqueEntityId
   clientId: UniqueEntityId
-  status: 'pending' | 'completed' | 'canceled'
+  status: 'Pendente' | 'Em Andamento' | 'Concluído'
   price: number
 }
 

@@ -35,7 +35,7 @@ describe('GetByIdServiceController', () => {
       vehicleId: { toValue: () => 'vehicle123' },
       price: 100,
       serviceDate: new Date('2024-01-01T10:00:00.000Z'),
-      status: 'completed',
+      status: 'Concluído',
     }
 
     const mockResponse = {
@@ -55,7 +55,7 @@ describe('GetByIdServiceController', () => {
       description: 'Serviço de teste',
       price: '100',
       serviceDate: '2024-01-01T10:00:00.000Z',
-      status: 'completed',
+      status: 'Concluído',
     })
   })
 
