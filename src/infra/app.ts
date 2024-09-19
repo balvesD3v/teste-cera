@@ -3,13 +3,13 @@ import serviceRoutes from './routes/service.routes'
 import mongoose from 'mongoose'
 import { env } from './env/env'
 import swaggerUi from 'swagger-ui-express'
-import { swaggerSpecs } from '../../swagger'
+import { swaggerDocument } from './docs/swagger'
 
 const app = express()
 
 app.use(express.json())
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs))
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.use('/api', serviceRoutes)
 
