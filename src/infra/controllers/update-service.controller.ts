@@ -36,10 +36,10 @@ export class UpdateServiceController {
 
     return res.status(200).json({
       id: service.id.toString(),
-      clientId: service.clientId.toString(),
-      vehicleId: service.vehicleId.toString(),
-      description: service.description.toString(),
-      price: service.price.toString(),
+      clientId: service.clientId,
+      vehicleId: service.vehicleId,
+      description: service.description,
+      price: service.price,
       serviceDate: service.serviceDate,
       status: service.status,
     })
