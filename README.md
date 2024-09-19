@@ -100,6 +100,15 @@ Após a instalação, você pode interagir com o sistema por meio de endpoints R
 ````
 POST /api/services
 ````
+- *Método HTTP*: POST
+- *Corpo da requisição*: (JSON)
+  json
+  {
+    "name": "Nome do Serviço",
+    "description": "Descrição do Serviço",
+    "price": 100
+  }
+
 ![Descrição do GIF](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWFsZXZ1aHdqOWdpOTAxOWplZjZyZjFneDVjdXIwajFsdm44MDRyeiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/dfeXfSS9RUsuzz7Jyl/giphy.webp)
 
 - Campos Obrigatórios
@@ -115,6 +124,14 @@ POST /api/services
 ````
 PUT /api/services/:id
 ````
+- *Método HTTP*: PUT
+- *Corpo da requisição*: (JSON)
+  json
+  {
+    "name": "Nome do Serviço Atualizado",
+    "description": "Descrição do Serviço Atualizada",
+    "price": 150
+  }
 ![Descrição do GIF](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzN1OHFjMTdocnFuZjl1N3V4eXZsdngxODFkZ3E0Ym41ZTUxYzVlaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3cA94ttA9Ufkjb2F8W/giphy.gif)
 
 Campos Atualizáveis
