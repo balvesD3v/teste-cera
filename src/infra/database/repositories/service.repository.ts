@@ -1,3 +1,4 @@
+import { ServiceQuery } from 'src/infra/@types/serviceQuery'
 import { ServiceRepository } from '../../../domain/application/repositories/service.repository'
 import { Service } from '../../../domain/enterprise/entities/service'
 import { ServiceModel } from '../../models/service.model'
@@ -29,6 +30,30 @@ export class MongoServiceRepository implements ServiceRepository {
     }
 
     return ServiceMapper.toDomain(service)
+  }
+
+  async findByFilters(filters: {
+    clientId?: string
+    vehicleId?: string
+    status?: string
+  }): Promise<Service[] | null> {
+    const query: ServiceQuery = {}
+
+    if (filters.clientId) {
+      query.clientId = filters.clientId
+    }
+
+    if (filters.vehicleId) {
+      query.vehicleId = filters.vehicleId
+    }
+
+    if (filters.status) {
+      query.status = filters.status
+    }
+
+    const services = await ServiceModel.find(query).exec()
+
+    return services.map(ServiceMapper.toDomain)
   }
 
   async update(service: Service): Promise<void> {
