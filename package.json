@@ -14,7 +14,7 @@
     "build": "tsc",
     "dev": "ts-node-dev --respawn --transpile-only src/infra/server.ts",
     "start": "node dist/infra/server.ts",
-    "start:docker": "node dist/infra/server.js",
+    "start:docker": "node dist/src/infra/server.js",
     "test": "vitest",
     "test:e2e": "vitest run --config ./vite.config.e2e.ts",
     "test:e2e:watch": "vitest --config ./vite.config.e2e.ts"
