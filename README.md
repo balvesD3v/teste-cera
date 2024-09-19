@@ -1,6 +1,6 @@
 ﻿# CERA Plataforma - Gestão Automotiva
 
-API de gerenciamento de serviços automotivos. 
+API de gerenciamento de serviços automotivos.
 
 ## Introdução
 Esta API permitirá que os usuários (mecânicos, gestores de oficina, etc.) possam gerenciar os serviços realizados em veículos, incluindo a criação, atualização, consulta e exclusão de registros de serviços.
@@ -47,45 +47,72 @@ O projeto segue uma arquitetura modular e organizada, visando a separação de r
     - infra: Infraestrutura do projeto, lidando com a interação com o mundo externo (ex: banco de dados, APIs).
 - test: Diretório contendo os testes da aplicação. É provável que estejam estruturados para abranger testes unitários, de integração e de ponta a ponta.
 
-## Instalação e configuração
+## Instalação e configuração - DEV
 
-## Passo a passo
-1. Clone o repositório 
-    ````
+### Passo a passo
+1. Clone o repositório
+    bash
     git clone git@github.com:balvesD3v/teste-cera.git
-    ````
+    
 2. Navegue para a pasta do projeto:
-    ````
+    bash
     cd teste-cera
-    ````
-3. Defina a varíavel de ambienta DATABASE_URL
-    ```bash
-    Crie um .env seguindo o .env.example
-
+    
+3. Defina a variável de ambienta DATABASE_URL criando um .env no root da aplicação (conforme .env.example)
+    dotenv
     DATABASE_URL=mongodb://seu_banco:27017/nome_da_base_de_dados
-    ````
+    
 4. Instale as dependências
-    ````
+    bash
     npm install
-    ````
+    
 5. Execute o build do typescript
-    ````
+    bash
     npm run build
-    ````
-6. Inicie a aplicação com 
-    ````
+    
+6. Inicie a aplicação com o comando abaixo e o projeto estará sendo executado na porta :3000
+    bash
     npm run dev
-    ````    
-5. O projeto vai está rodando na porta 3000
+    
 
+## Instalação e configuração - Docker
+1. Clone o repositório
+    bash
+    git clone git@github.com:balvesD3v/teste-cera.git
+    
+2. Navegue para a pasta do projeto:
+    bash
+    cd teste-cera
+    
+3. Defina a variável de ambienta DATABASE_URL criando um .env no root da aplicação (conforme .env.example)
+    dotenv
+    DATABASE_URL=mongodb://seu_banco:27017/nome_da_base_de_dados
+    
+4. Inicie o docker-compose e a aplicação estará sendo executada na porta :3000
+    bash
+   docker compose up -d
+   
+    
 ## Uso
 Após a instalação, você pode interagir com o sistema por meio de endpoints RESTful. Abaixo, estão as instruções para utilizar cada funcionalidade do sistema.
 
-### Cadastro de Serviços
-#### Para cadastrar um novo serviço, envie um POST para o seguinte endpoint:
-````
+## Cadastro de Serviços
+### POST /api/services
+Para cadastrar um novo serviço, envie um POST para o seguinte endpoint:
+
+- *URL*: /api/services
+- *Método HTTP*: POST
+- *Corpo da requisição*: (JSON)
+  json
+  {
+    "name": "Nome do Serviço",
+    "description": "Descrição do Serviço",
+    "price": 100
+  }
+  
+
 POST /api/services
-````
+
 ![Descrição do GIF](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWFsZXZ1aHdqOWdpOTAxOWplZjZyZjFneDVjdXIwajFsdm44MDRyeiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/dfeXfSS9RUsuzz7Jyl/giphy.webp)
 
 - Campos Obrigatórios
@@ -98,10 +125,10 @@ POST /api/services
 
 ### Atualização de Serviços
 #### Para atualizar um serviço existente, envie um PUT para o seguinte endpoint:
-````
+
 PUT /api/services/:id
-````
-![Descrição do GIF](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzN1OHFjMTdocnFuZjl1N3V4eXZsdngxODFkZ3E0Ym41ZTUxYzVlaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3cA94ttA9Ufkjb2F8W/giphy.gif)
+
+![Descrição do GIF](https://raw.githubusercontent.com/balvesD3v/assets-food-explorer/refs/heads/main/assets/HTTPie%202024-09-19%2017-34-05.gif?token=GHSAT0AAAAAACWQPWBDUZE34XQPD27WRYTAZXMTIVA)
 
 Campos Atualizáveis
 Você pode atualizar qualquer campo do serviço, exceto o ID.
@@ -110,50 +137,50 @@ Você pode atualizar qualquer campo do serviço, exceto o ID.
 #### Para consultar serviços, você pode usar os seguintes endpoints:
 
 Listar Todos os Serviços
-````
+
 GET /api/services
-````
+
 ![Descrição do GIF](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWRkNzN0cGg0ZWxwbHdudzd2N3JuNmR1bHJsbnppM3VtaWlpNm5rdyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/FBKvxc0p7rphamK5XF/giphy.webp)
 
 Por ID do Serviço
-````
+
 GET /api/services/:id
-````
+
 ![Descrição do GIF](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExaGE5YXh2aHIwaTFpMjIxc2xnZHB0Nml4dzg0a2Zya2M3a2o3NnZ4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0D2ro8Pq9DahyKgDk2/giphy.webp)
 
 ### Consulta de Serviços Filtrados
 #### Para consultar serviços de forma filtrada, você pode utilizar o seguinte endpoint:
 Por ID do Cliente ou VehicleID ou Status (utilize query aqui)
-````
+
 GET /api/servicesfiltered
-````
+
 ![Descrição do GIF](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHJ0NnJtM3ZpNHFod3phNmw3NGxseHB1dGxwaTl0NjhtZGF6Z2docCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/rvUBstf4rS6AKnHUJT/giphy.webp)
 
-- Parâmetros de Consulta
-- Você pode usar os seguintes parâmetros de consulta para filtrar os serviços retornados:
+Parâmetros de Consulta
+Você pode usar os seguintes parâmetros de consulta para filtrar os serviços retornados:
 
-    - clientId: Filtra os serviços pelo ID do cliente.
-    - vehicleId: Filtra os serviços pelo ID do veículo.
-    - status: Filtra os serviços pelo status (Pendente, Em Andamento, Concluído).
+clientId: Filtra os serviços pelo ID do cliente.
+vehicleId: Filtra os serviços pelo ID do veículo.
+status: Filtra os serviços pelo status (Pendente, Em Andamento, Concluído).
 
 ### Exclusão de Serviços
 #### Para excluir um serviço pelo ID, envie um DELETE para o seguinte endpoint:
-````
+
 DELETE /api/services/:id
-````
-![Descrição do GIF](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWZqcjJtZWI4N25rNndzMW04cTB6Znl3OTd6djR3Z3BjYjhqajl5ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/gLV7bVKzXqZmwbp7RH/giphy.gif)
+
+![Descrição do GIF](https://raw.githubusercontent.com/balvesD3v/assets-food-explorer/refs/heads/main/assets/HTTPie%202024-09-19%2018-07-22.gif?token=GHSAT0AAAAAACWQPWBDHPL5JGFOS5AIMHIYZXMTKGQ)
 
 ## Testes
 O projeto utiliza o Vitest como framework de testes, permitindo a execução de testes unitários e de integração.
 
 ### Para rodar os testes unitários execute o seguinte comado:
-````
+
 npm test
-````
+
 ### Para rodar os testes end-to-end execute o seguinte comado:
-````
+
 npm run test:e2e
-````
+```
 ## Documentação da API
 A documentação da API está disponível e pode ser acessada através do seguinte link:
 
